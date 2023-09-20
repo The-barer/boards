@@ -1,12 +1,17 @@
 import './App.css'
-import Auth from './pages/Auth'
+import {Route, Routes } from "react-router-dom";
+import AuthPage from './pages/AuthPage'
+import HomePage from './pages/HomePage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
-    <>
-      <Auth />
-    </>
-  )
+    <Routes>
+      <Route path='/'  element={<HomePage/>} /> 
+      <Route path='/auth'  element={<AuthPage/>} /> 
+      <Route path='/register'  element={<RegisterPage/>} /> 
+    </Routes>
+    )
 }
 
 export default App

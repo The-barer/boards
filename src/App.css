@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+label {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
