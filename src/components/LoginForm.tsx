@@ -1,4 +1,4 @@
-import { ILoginFormFields } from "../types/types";
+import { ILoginFormFields } from "../Types/types";
 
 interface ILoginFormProps {
   onSubmit: (data: ILoginFormFields) => void;
@@ -14,15 +14,17 @@ export default function LoginForm({ onSubmit }: ILoginFormProps) {
   ) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const { email, password, remember } = form;
+    const { email, password } = form;
     onSubmit({
-      login: email.value,
+      email: email.value,
       password: password.value,
-      isRemember: remember.checked,
     });
   };
   return (
-    <form onSubmit={handelSubmit}>
+    <form
+      onSubmit={handelSubmit}
+      style={{ display: "flex", flexDirection: "column" }}
+    >
       <label>
         <span>E-mail: </span>
         <input type="email" name="email" required />
@@ -31,11 +33,10 @@ export default function LoginForm({ onSubmit }: ILoginFormProps) {
         <span>Password: </span>
         <input type="password" name="password" required />
       </label>
-      <label style={{ justifyContent: "center" }}>
-        <input type="checkbox" name="remember" />
-        <span>Remember me</span>
-      </label>
-      <button type="submit">LogIn</button>
+
+      <button type="submit" style={{ width: "fit-content" }}>
+        Отправить
+      </button>
     </form>
   );
 }

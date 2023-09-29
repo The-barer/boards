@@ -1,5 +1,10 @@
 export interface ILoginFormFields {
-    login: string;
-    password: string;
-    isRemember?: boolean;
+  email: string;
+  password: string;
+}
+
+export interface IUser {
+  id: number;
+  email: string;
+  token: string;
 }
