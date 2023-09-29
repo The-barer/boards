@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import LoginForm from "../Components/LoginForm";
 import { setAccessTokenToLocalStorage } from "../Helpers/localStorage.helper";
 import { authService } from "../Services/auth.service";
@@ -22,6 +21,7 @@ export default function Auth() {
         dispatch(login(data));
         navigate("/");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       const error = err.response?.data.message;
       console.log(error.toString());
