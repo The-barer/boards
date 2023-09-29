@@ -32,26 +32,36 @@ export default function Auth() {
   const handelAuthType = (): void => setIsLogin(!isLogin);
 
   return (
-    <>
-      {isLogin ? <h3>LogIn</h3> : <h3>Registration</h3>}
+    <div className="container" style={{ width: "100vw" }}>
+      <div
+        style={{
+          width: "30vw",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {isLogin ? <h3>LogIn</h3> : <h3>Registration</h3>}
 
-      <LoginForm onSubmit={handelAuthForm} />
+        <LoginForm onSubmit={handelAuthForm} />
 
-      {!isLogin ? (
-        <div
-          onClick={handelAuthType}
-          style={{ cursor: "pointer", textDecorationLine: "underline" }}
-        >
-          Уже есть Аккаунт?
-        </div>
-      ) : (
-        <div
-          onClick={handelAuthType}
-          style={{ cursor: "pointer", textDecorationLine: "underline" }}
-        >
-          Зарегистрироваться
-        </div>
-      )}
-    </>
+        {!isLogin ? (
+          <div
+            onClick={handelAuthType}
+            style={{ cursor: "pointer", textDecorationLine: "underline" }}
+          >
+            Уже есть Аккаунт?
+          </div>
+        ) : (
+          <div
+            onClick={handelAuthType}
+            style={{ cursor: "pointer", textDecorationLine: "underline" }}
+          >
+            Зарегистрироваться
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

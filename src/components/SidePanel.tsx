@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Hooks/reduxHooks";
 import { logout } from "../Store/User/userSlice";
 import { useAuth } from "../Hooks/useAuth";
@@ -8,6 +8,7 @@ import { IUser } from "../Types/types";
 
 export const SidePanel: FC = () => {
   const isAuth = useAuth();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handelLogout = () => {
     dispatch(logout());
@@ -31,7 +32,13 @@ export const SidePanel: FC = () => {
           }}
         >
           <h3 style={{ margin: "0 auto" }}> Hello, {email} !</h3>
-          <NavLink to="/secret">Страница категорий</NavLink>
+          <div
+            className="links"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <button onClick={() => navigate("/")}>Главная</button>
+            <button onClick={() => navigate("/main")}>Личная страница</button>
+          </div>
           <button onClick={handelLogout}>Выйти</button>
         </div>
       )}

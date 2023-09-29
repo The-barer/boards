@@ -23,16 +23,26 @@ export default function LoginForm({ onSubmit }: ILoginFormProps) {
   return (
     <form
       onSubmit={handelSubmit}
-      style={{ display: "flex", flexDirection: "column" }}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <label>
-        <span>E-mail: </span>
-        <input type="email" name="email" required />
-      </label>
-      <label>
-        <span>Password: </span>
-        <input type="password" name="password" required />
-      </label>
+      <div
+        className="inputs"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          padding: "10px",
+        }}
+      >
+        <label>
+          <span>E-mail: </span>
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          <span>Password: </span>
+          <input type="password" name="password" required />
+        </label>
+      </div>
 
       <button type="submit" style={{ width: "fit-content" }}>
         Отправить
