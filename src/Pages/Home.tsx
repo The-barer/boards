@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../Hooks/useAuth";
+import { useIsAuth } from "../Hooks/useIsAuth";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const isAuth = useAuth();
+  const isAuth = useIsAuth();
   return (
     <>
       <div>Home Page</div>

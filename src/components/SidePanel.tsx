@@ -2,20 +2,22 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Hooks/reduxHooks";
 import { logout } from "../Store/User/userSlice";
-import { useAuth } from "../Hooks/useAuth";
+import { useIsAuth } from "../Hooks/useIsAuth";
 import { removeTokenFromLocalStorage } from "../Helpers/localStorage.helper";
-import { IUser } from "../Types/types";
+import { IUserAuthResponse } from "../Types/types";
 
 export const SidePanel: FC = () => {
-  const isAuth = useAuth();
+  const isAuth = useIsAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handelLogout = () => {
     dispatch(logout());
     removeTokenFromLocalStorage();
   };
-  const user: IUser | null = useAppSelector((state) => state.user.user);
-  const email = user?.email || "Anonymos";
+  const user: IUserAuthResponse | null = useAppSelector(
+    (state) => state.user.user
+  );
+  const userName = user?.name || user?.email || user?.id || "Anonymos";
   return (
     <>
       {isAuth && (
@@ -31,7 +33,7 @@ export const SidePanel: FC = () => {
             padding: "10px",
           }}
         >
-          <h3 style={{ margin: "0 auto" }}> Hello, {email} !</h3>
+          <h3 style={{ margin: "0 auto" }}> Hello, {userName} !</h3>
           <div
             className="links"
             style={{ display: "flex", flexDirection: "column" }}

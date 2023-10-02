@@ -6,6 +6,7 @@ import { useAppDispatch } from "../Hooks/reduxHooks";
 import { ILoginFormFields } from "../Types/types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { VKButton } from "../Components/VKButton";
 
 export default function Auth() {
   const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ export default function Auth() {
             Зарегистрироваться
           </div>
         )}
+        <VKButton />
       </div>
     </div>
   );

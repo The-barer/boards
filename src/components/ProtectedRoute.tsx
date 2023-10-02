@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { useAuth } from "../Hooks/useAuth";
+import { useIsAuth } from "../Hooks/useIsAuth";
 import { useNavigate } from "react-router-dom";
 type Props = {
   children: JSX.Element;
 };
 
 export const ProtectedRoute: FC<Props> = ({ children }) => {
-  const isAuth = useAuth();
+  const isAuth = useIsAuth();
   const navigate = useNavigate();
 
   return isAuth ? (
