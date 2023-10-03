@@ -2,6 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { IUserAuthResponse } from "../../Types/types";
+import {
+  removeTokenFromLocalStorage,
+  setAccessTokenToLocalStorage,
+} from "../../Helpers/localStorage.helper";
 
 interface UserState {
   user: IUserAuthResponse | null;
@@ -20,10 +24,12 @@ export const userSlice = createSlice({
     login: (state, action: PayloadAction<IUserAuthResponse>) => {
       state.user = action.payload;
       state.isAuth = true;
+      setAccessTokenToLocalStorage(state.user.token);
     },
     logout: (state) => {
       state.user = null;
       state.isAuth = false;
+      removeTokenFromLocalStorage();
     },
   },
 });

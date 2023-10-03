@@ -1,14 +1,16 @@
 import LoginForm from "../Components/LoginForm";
-import { setAccessTokenToLocalStorage } from "../Helpers/localStorage.helper";
 import { authService } from "../Services/auth.service";
-import { login } from "../Store/User/userSlice";
+import { login, logout } from "../Store/User/userSlice";
 import { useAppDispatch } from "../Hooks/reduxHooks";
 import { ILoginFormFields } from "../Types/types";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { VKButton } from "../Components/VKButton";
+import { queryParse } from "../Helpers/queryParse.helper";
 
 export default function Auth() {
+  const { type } = useParams();
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handelAuthForm = async (formFieldsData: ILoginFormFields) => {
@@ -17,8 +19,6 @@ export default function Auth() {
       const data = await authService[authType](formFieldsData);
 
       if (data) {
-        console.log(data);
-        setAccessTokenToLocalStorage(data.token);
         dispatch(login(data));
         navigate("/");
       }
@@ -28,9 +28,27 @@ export default function Auth() {
       console.log(error.toString());
     }
   };
-
+  const [loginType, setLoginType] = useState<string | undefined>("");
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const handelAuthType = (): void => setIsLogin(!isLogin);
+
+  useEffect(() => {
+    const handelVKLogin = async (code: string) => {
+      console.log(code);
+      dispatch(logout());
+      const user = await authService.loginVK(code);
+      try {
+        return user && dispatch(login(user)) && navigate("/");
+      } catch {
+        return dispatch(logout());
+        console.log("VKLogin Error");
+      }
+    };
+    if (loginType === "vk" && location.search) {
+      const query = queryParse(location.search);
+      return query.code && handelVKLogin(query.code);
+    }
+  }, [loginType]);
 
   return (
     <div className="container" style={{ width: "100vw" }}>
