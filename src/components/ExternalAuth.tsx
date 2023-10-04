@@ -63,6 +63,9 @@ export const ExternalAuth = () => {
       <AuthButton onSubmit={openPopup} err={err} config={authConfig.vk}>
         <span>Войти через VK</span>
       </AuthButton>
+      <AuthButton onSubmit={openPopup} err={err} config={authConfig.google}>
+        <span>Войти через GOOGLE</span>
+      </AuthButton>
     </div>
   );
 };
