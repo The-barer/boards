@@ -3,21 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Hooks/reduxHooks";
 import { logout } from "../Store/User/userSlice";
 import { useIsAuth } from "../Hooks/useIsAuth";
-import { removeTokenFromLocalStorage } from "../Helpers/localStorage.helper";
 import { IUserAuthResponse } from "../Types/types";
 
 export const SidePanel: FC = () => {
   const isAuth = useIsAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const handelLogout = () => {
-    dispatch(logout());
-    removeTokenFromLocalStorage();
-  };
   const user: IUserAuthResponse | null = useAppSelector(
     (state) => state.user.user
   );
+
   const userName = user?.name || user?.email || user?.id || "Anonymos";
+
   return (
     <>
       {isAuth && (
@@ -41,7 +38,7 @@ export const SidePanel: FC = () => {
             <button onClick={() => navigate("/")}>Главная</button>
             <button onClick={() => navigate("/main")}>Личная страница</button>
           </div>
-          <button onClick={handelLogout}>Выйти</button>
+          <button onClick={() => dispatch(logout())}>Выйти</button>
         </div>
       )}
     </>

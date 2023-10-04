@@ -1,6 +1,6 @@
 import { todoAppServer } from "../Api/axios.api";
-import { ILoginFormFields, IUserAuthResponse } from "../Types/types";
 
+import { ILoginFormFields, IUserAuthResponse } from "../Types/types";
 export const authService = {
   async registration(
     regData: ILoginFormFields
@@ -22,11 +22,15 @@ export const authService = {
     return data;
   },
 
-  async loginVK(code: string): Promise<IUserAuthResponse | undefined> {
+  async login0Auth(
+    code: string,
+    type: string
+  ): Promise<IUserAuthResponse | undefined> {
     const { data } = await todoAppServer.post<IUserAuthResponse>(
-      "auth/login/vk",
+      `auth/login/${type}`,
       { code }
     );
+
     return data;
   },
 

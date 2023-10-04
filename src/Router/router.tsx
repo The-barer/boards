@@ -5,6 +5,7 @@ import Auth from "../Pages/Auth";
 import { ErrorPage } from "../Pages/ErrorPage";
 import { Secret } from "../Pages/Secret";
 import { ProtectedRoute } from "../Components/ProtectedRoute";
+import { Callback } from "../Pages/Callback";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       {
-        path: "/main",
+        path: "main",
         element: (
           <ProtectedRoute>
             <Secret />
@@ -24,7 +25,12 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/auth/:type?",
+    path: "/auth",
     element: <Auth />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/auth/callback",
+    element: <Callback />,
   },
 ]);

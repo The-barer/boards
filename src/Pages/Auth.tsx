@@ -3,52 +3,31 @@ import { authService } from "../Services/auth.service";
 import { login, logout } from "../Store/User/userSlice";
 import { useAppDispatch } from "../Hooks/reduxHooks";
 import { ILoginFormFields } from "../Types/types";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { VKButton } from "../Components/VKButton";
-import { queryParse } from "../Helpers/queryParse.helper";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ExternalAuth } from "../Components/ExternalAuth";
 
 export default function Auth() {
-  const { type } = useParams();
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handelAuthForm = async (formFieldsData: ILoginFormFields) => {
     try {
       const authType = isLogin ? "login" : "registration";
       const data = await authService[authType](formFieldsData);
-
+      console.log("login data:", data);
       if (data) {
         dispatch(login(data));
         navigate("/");
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      dispatch(logout());
       const error = err.response?.data.message;
       console.log(error.toString());
     }
   };
-  const [loginType, setLoginType] = useState<string | undefined>("");
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const handelAuthType = (): void => setIsLogin(!isLogin);
-
-  useEffect(() => {
-    const handelVKLogin = async (code: string) => {
-      console.log(code);
-      dispatch(logout());
-      const user = await authService.loginVK(code);
-      try {
-        return user && dispatch(login(user)) && navigate("/");
-      } catch {
-        return dispatch(logout());
-        console.log("VKLogin Error");
-      }
-    };
-    if (loginType === "vk" && location.search) {
-      const query = queryParse(location.search);
-      return query.code && handelVKLogin(query.code);
-    }
-  }, [loginType]);
 
   return (
     <div className="container" style={{ width: "100vw" }}>
@@ -80,7 +59,7 @@ export default function Auth() {
             Зарегистрироваться
           </div>
         )}
-        <VKButton />
+        <ExternalAuth />
       </div>
     </div>
   );
