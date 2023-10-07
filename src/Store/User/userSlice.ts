@@ -7,6 +7,7 @@ import {
   removeTokenFromLocalStorage,
   setAccessTokenToLocalStorage,
 } from "../../Helpers/localStorage.helper";
+import { authService } from "../../Services/auth.service";
 
 interface UserState {
   user: IUserAuthResponse | null;
@@ -31,6 +32,7 @@ export const userSlice = createSlice({
     },
 
     logout: (state) => {
+      authService.logout();
       state.user = null;
       state.isAuth = false;
       removeTokenFromLocalStorage();

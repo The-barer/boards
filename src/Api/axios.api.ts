@@ -1,12 +1,15 @@
 import axios, { AxiosError } from "axios";
 import {
   getAccessTokenFromLocalStorage,
+  removeTokenFromLocalStorage,
   setAccessTokenToLocalStorage,
 } from "../Helpers/localStorage.helper";
-import { authService } from "../Services/auth.service";
+import { ITokens } from "../Types/types";
+import { jwtExp } from "../Helpers/jwt.helper";
 
+const serverHost = import.meta.env.VITE_SERVER_HOST + "/api";
 const todoAppServer = axios.create({
-  baseURL: "http://localhost:4003/api/",
+  baseURL: serverHost,
   withCredentials: true,
 });
 
@@ -21,10 +24,19 @@ todoAppServer.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config;
     if (error.response?.status === 401) {
+      if (!jwtExp(getAccessTokenFromLocalStorage())) {
+        removeTokenFromLocalStorage();
+        console.log("Токен доступа истек");
+      }
       try {
-        const tokens = await authService.refreshTokens();
+        const { data: tokens }: { data: ITokens } = await axios.get(
+          `${serverHost}/auth/token`,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log("Получены новые токены: ", tokens);
         tokens && setAccessTokenToLocalStorage(tokens.accessToken);
-        console.log("Получены новые токены!");
         return originalRequest && todoAppServer.request(originalRequest);
       } catch (error) {
         console.log("Требуется авторизация");
