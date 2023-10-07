@@ -1,6 +1,6 @@
-import { todoAppServer } from "../Api/axios.api";
+import todoAppServer from "../Api/axios.api";
 
-import { ILoginFormFields, IUserAuthResponse } from "../Types/types";
+import { ILoginFormFields, ITokens, IUserAuthResponse } from "../Types/types";
 export const authService = {
   async registration(
     regData: ILoginFormFields
@@ -23,19 +23,26 @@ export const authService = {
   },
 
   async login0Auth(
-    code: string,
+    params: URLSearchParams,
     type: string
   ): Promise<IUserAuthResponse | undefined> {
-    const { data } = await todoAppServer.post<IUserAuthResponse>(
+    const { data } = await todoAppServer.get<IUserAuthResponse>(
       `auth/login/${type}`,
-      { code }
+      {
+        params,
+      }
     );
-
     return data;
   },
 
   async getAuth(): Promise<IUserAuthResponse | undefined> {
     const { data } = await todoAppServer.get<IUserAuthResponse>("auth/profile");
     if (data) return data;
+  },
+
+  async refreshTokens(): Promise<ITokens> {
+    const { data } = await todoAppServer.get<ITokens>("auth/token");
+    if (data) return data;
+    return {} as ITokens;
   },
 };

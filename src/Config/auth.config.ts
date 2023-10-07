@@ -26,7 +26,8 @@ export const authConfig: AuthConfig = {
     searchParams: {
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       redirect_uri: import.meta.env.VITE_AUTH_REDIRECT_URL,
-      scope: "email",
+      scope:
+        "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
       response_type: "code",
       state: Math.trunc(Math.random() * 19890903).toString(),
     },

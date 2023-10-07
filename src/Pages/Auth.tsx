@@ -14,16 +14,14 @@ export default function Auth() {
     try {
       const authType = isLogin ? "login" : "registration";
       const data = await authService[authType](formFieldsData);
-      console.log("login data:", data);
+
       if (data) {
         dispatch(login(data));
         navigate("/");
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+    } catch (err) {
       dispatch(logout());
-      const error = err.response?.data.message;
-      console.log(error.toString());
+      console.log(err);
     }
   };
   const [isLogin, setIsLogin] = useState<boolean>(true);

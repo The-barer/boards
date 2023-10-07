@@ -3,19 +3,17 @@ export interface ILoginFormFields {
   password: string;
 }
 
-export interface IUser {
-  id: string;
-  email: string;
-  token: string;
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
 }
 
-export interface IUserAuthResponse {
+export interface IUserAuthResponse extends ITokens {
   id: string;
   email?: string | null;
   vk_id?: string | null;
   name?: string | null;
   avatar_url?: string | null;
-  token: string;
 }
 
 export interface IQueryParse {
@@ -25,7 +23,7 @@ export interface IQueryParse {
 export interface IAuthConfig {
   type: string;
   baseUrl: string;
-  searchParams: {
+  searchParams?: {
     client_id: string;
     redirect_uri: string;
     display?: string;

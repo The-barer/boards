@@ -17,10 +17,10 @@ export const ExternalAuth = () => {
     const popupHeight = 400;
     const left = window.screenX + window.outerWidth - popupWidth;
     const top = window.screenY + (window.outerHeight - popupHeight) / 2.5;
-    const title = `Authentication`;
+    const target = `Auth`;
     const popup = window.open(
       url,
-      title,
+      target,
       `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`
     );
     setExternalPopup(popup);
@@ -32,29 +32,32 @@ export const ExternalAuth = () => {
     }
 
     const timer = setInterval(() => {
-      if (!externalPopup) {
+      if (externalPopup.window === null) {
         timer && clearInterval(timer);
+        setExternalPopup(null);
         return;
       }
-
       if (externalPopup.closed) {
+        timer && clearInterval(timer);
+
         const popupParams = new URLSearchParams(externalPopup.location.search);
         const code = popupParams.get("code");
+
         if (code && authType) {
           authService
-            .login0Auth(code, authType)
+            .login0Auth(popupParams, authType)
             .then((data) => {
               data && dispatch(login(data));
               navigate("/");
             })
             .catch(() => {
               setErr(true);
-              console.log("Error reciving data VK");
+              console.log("Error reciving data frome todo-server");
+            })
+            .finally(() => {
+              setAuthType(null);
             });
         }
-        setExternalPopup(null);
-        setAuthType(null);
-        timer && clearInterval(timer);
       }
     }, 500);
   }, [authType, dispatch, externalPopup, navigate]);

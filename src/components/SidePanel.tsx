@@ -6,6 +6,17 @@ import { useIsAuth } from "../Hooks/useIsAuth";
 import { IUserAuthResponse } from "../Types/types";
 
 export const SidePanel: FC = () => {
+  const avatarStyle: React.CSSProperties = {
+    borderRadius: "50%",
+    boxShadow: "4px 4px 14px rgba(77, 77, 77, 0.25)",
+    display: "inline-block",
+    width: "6em",
+    height: "6em",
+    boxSizing: "border-box",
+    margin: "0px auto",
+    verticalAlign: "top",
+  };
+
   const isAuth = useIsAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -30,7 +41,15 @@ export const SidePanel: FC = () => {
             padding: "10px",
           }}
         >
-          <h3 style={{ margin: "0 auto" }}> Hello, {userName} !</h3>
+          <div
+            className="userInfo"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            {user?.avatar_url && (
+              <img src={user?.avatar_url} style={avatarStyle}></img>
+            )}
+            <h3 style={{ margin: "0 auto" }}> {userName} </h3>
+          </div>
           <div
             className="links"
             style={{ display: "flex", flexDirection: "column" }}

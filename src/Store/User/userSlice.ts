@@ -27,7 +27,7 @@ export const userSlice = createSlice({
       state.isAuth = true;
 
       !getAccessTokenFromLocalStorage() &&
-        setAccessTokenToLocalStorage(action.payload.token);
+        setAccessTokenToLocalStorage(action.payload.accessToken);
     },
 
     logout: (state) => {

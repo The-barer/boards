@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { IAuthConfig } from "../Types/types";
 
 interface IAuthButton {
@@ -13,20 +14,20 @@ export const AuthButton = ({
   err,
   config,
 }: IAuthButton) => {
-  config.searchParams.state &&
-    sessionStorage.setItem("regstate", config.searchParams.state);
-
+  const authUrl = useRef<string>("");
   const getAuthURL = ({ baseUrl, searchParams }: IAuthConfig) => {
     const params = new URLSearchParams(searchParams);
-    return `${baseUrl}?${params.toString()}`;
+    const url = new URL(baseUrl) + "?" + params.toString();
+    return url;
   };
 
-  const authUrl = getAuthURL(config);
+  authUrl.current = getAuthURL(config);
+
   return (
     <div>
       <button
         onClick={() => {
-          onSubmit(authUrl, config.type);
+          onSubmit(authUrl.current, config.type);
         }}
       >
         {children}
