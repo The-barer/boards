@@ -6,7 +6,7 @@ export const authService = {
     regData: ILoginFormFields
   ): Promise<IUserAuthResponse | undefined> {
     const { data } = await todoAppServer.post<IUserAuthResponse>(
-      "user/reg",
+      "user/registration",
       regData
     );
     return data;
