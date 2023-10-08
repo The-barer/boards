@@ -3,7 +3,7 @@ import { router } from "./Router/router";
 import { useAppDispatch } from "./Hooks/reduxHooks";
 import { getAccessTokenFromLocalStorage } from "./Helpers/localStorage.helper";
 import { authService } from "./Services/auth.service";
-import { logout, login } from "./Store/User/userSlice";
+import { login } from "./Store/User/userSlice";
 import { useEffect, useRef } from "react";
 
 function App() {
@@ -16,8 +16,6 @@ function App() {
         const data = await authService.getAuth();
         if (data) {
           dispatch(login(data));
-        } else {
-          dispatch(logout());
         }
       }
     } catch (error) {
