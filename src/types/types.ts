@@ -7,13 +7,15 @@ export interface ITokens {
   accessToken: string;
   refreshToken: string;
 }
-
+export interface IUserResponse {
+  email: string;
+  authUserId: string | null;
+  userName: string;
+  photo: string | null;
+  isAvtiveted: boolean;
+}
 export interface IUserAuthResponse extends ITokens {
-  id: string;
-  email?: string | null;
-  vk_id?: string | null;
-  name?: string | null;
-  avatar_url?: string | null;
+  user: IUserResponse;
 }
 
 export interface IQueryParse {

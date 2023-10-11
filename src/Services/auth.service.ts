@@ -6,7 +6,7 @@ export const authService = {
     regData: ILoginFormFields
   ): Promise<IUserAuthResponse | undefined> {
     const { data } = await todoAppServer.post<IUserAuthResponse>(
-      "user/registration",
+      "auth/signin",
       regData
     );
     return data;
@@ -15,11 +15,18 @@ export const authService = {
   async login(
     loginData: ILoginFormFields
   ): Promise<IUserAuthResponse | undefined> {
-    const { data } = await todoAppServer.post<IUserAuthResponse>(
-      "auth/login",
-      loginData
-    );
-    return data;
+    try {
+      const { data } = await todoAppServer.post<IUserAuthResponse>(
+        "auth/login",
+        loginData
+      );
+
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
   },
   async logout() {
     try {

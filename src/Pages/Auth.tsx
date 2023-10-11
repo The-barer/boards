@@ -1,6 +1,6 @@
 import LoginForm from "../Components/LoginForm";
 import { authService } from "../Services/auth.service";
-import { login, logout } from "../Store/User/userSlice";
+import { login } from "../Store/User/userSlice";
 import { useAppDispatch } from "../Hooks/reduxHooks";
 import { ILoginFormFields } from "../Types/types";
 import { useState } from "react";
@@ -20,8 +20,7 @@ export default function Auth() {
         navigate("/");
       }
     } catch (err) {
-      dispatch(logout());
-      console.log(err);
+      console.log("Ошибка!", err);
     }
   };
   const [isLogin, setIsLogin] = useState<boolean>(true);

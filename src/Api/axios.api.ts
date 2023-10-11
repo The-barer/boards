@@ -17,6 +17,7 @@ todoAppServer.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${getAccessTokenFromLocalStorage()}`;
   return config;
 });
+
 todoAppServer.interceptors.response.use(
   (config) => {
     return config;
@@ -24,9 +25,9 @@ todoAppServer.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config;
     if (error.response?.status === 401) {
-      if (!jwtExp(getAccessTokenFromLocalStorage())) {
+      const token = getAccessTokenFromLocalStorage();
+      if (token && !jwtExp(token)) {
         removeTokenFromLocalStorage();
-        console.log("Токен доступа истек");
       }
       try {
         const { data: tokens }: { data: ITokens } = await axios.get(
@@ -42,6 +43,7 @@ todoAppServer.interceptors.response.use(
         console.log("Требуется авторизация");
       }
     }
+    return Promise.reject(error.response?.data);
   }
 );
 

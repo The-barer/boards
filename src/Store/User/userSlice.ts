@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { IUserAuthResponse } from "../../Types/types";
+import { IUserAuthResponse, IUserResponse } from "../../Types/types";
 import {
   getAccessTokenFromLocalStorage,
   removeTokenFromLocalStorage,
@@ -10,7 +10,7 @@ import {
 import { authService } from "../../Services/auth.service";
 
 interface UserState {
-  user: IUserAuthResponse | null;
+  user: IUserResponse | null;
   isAuth: boolean;
 }
 
@@ -24,7 +24,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<IUserAuthResponse>) => {
-      state.user = action.payload;
+      state.user = action.payload.user;
       state.isAuth = true;
 
       !getAccessTokenFromLocalStorage() &&

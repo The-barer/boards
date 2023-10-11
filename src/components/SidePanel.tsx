@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Hooks/reduxHooks";
 import { logout } from "../Store/User/userSlice";
 import { useIsAuth } from "../Hooks/useIsAuth";
-import { IUserAuthResponse } from "../Types/types";
+import { IUserResponse } from "../Types/types";
 
 export const SidePanel: FC = () => {
   const avatarStyle: React.CSSProperties = {
@@ -20,11 +20,9 @@ export const SidePanel: FC = () => {
   const isAuth = useIsAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user: IUserAuthResponse | null = useAppSelector(
-    (state) => state.user.user
-  );
+  const user: IUserResponse | null = useAppSelector((state) => state.user.user);
 
-  const userName = user?.name || user?.email || user?.id || "Anonymos";
+  const userName = user?.userName || user?.email || "Anonymos";
 
   return (
     <>
@@ -45,9 +43,7 @@ export const SidePanel: FC = () => {
             className="userInfo"
             style={{ display: "flex", flexDirection: "column" }}
           >
-            {user?.avatar_url && (
-              <img src={user?.avatar_url} style={avatarStyle}></img>
-            )}
+            {user?.photo && <img src={user?.photo} style={avatarStyle}></img>}
             <h3 style={{ margin: "0 auto" }}> {userName} </h3>
           </div>
           <div
