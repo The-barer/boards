@@ -26,9 +26,8 @@ export const UserFormField = (Props: UserInfoEdit) => {
 
   const canEdit = editable.includes(data.key);
 
-  const handelEdit = (event: React.FormEvent): void => {
+  const handelEdit = (): void => {
     setEdit(!edit);
-    console.log(event.currentTarget);
     if (newValue !== data.value) {
       setNewValue(data.value);
       deletUpdate(data.key);
