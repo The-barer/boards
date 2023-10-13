@@ -6,6 +6,7 @@ import { ErrorPage } from "../Pages/ErrorPage";
 import { Secret } from "../Pages/Secret";
 import { ProtectedRoute } from "../Components/ProtectedRoute";
 import { Callback } from "../Pages/Callback";
+import PersonalInfo from "../Pages/PersonalInfo";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Secret />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "lk",
+        element: (
+          <ProtectedRoute>
+            <PersonalInfo />
           </ProtectedRoute>
         ),
       },

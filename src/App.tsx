@@ -1,33 +1,24 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router/router";
-import { useAppDispatch } from "./Hooks/reduxHooks";
-import { getAccessTokenFromLocalStorage } from "./Helpers/localStorage.helper";
-import { authService } from "./Services/auth.service";
-import { login } from "./Store/User/userSlice";
 import { useEffect, useRef } from "react";
+import { getUserData } from "./Helpers/getUserData.helper";
+import { useAppDispatch } from "./Hooks/reduxHooks";
+import { login } from "./Store/User/userSlice";
 
 function App() {
   const isLoad = useRef(false);
   const dispatch = useAppDispatch();
-  const checkAuth = async () => {
-    const accessToken = getAccessTokenFromLocalStorage();
-    try {
-      if (accessToken) {
-        const data = await authService.getAuth();
-        if (data) {
-          dispatch(login(data));
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   useEffect(() => {
+    const loginUser = async () => {
+      const data = await getUserData();
+      if (data) dispatch(login(data));
+    };
     if (isLoad.current === false) {
-      checkAuth();
+      loginUser();
     }
     isLoad.current = true;
-  }, []);
+  }, [dispatch]);
 
   return <RouterProvider router={router} />;
 }

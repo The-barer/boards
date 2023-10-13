@@ -21,7 +21,9 @@ export interface IUserAuthResponse extends ITokens {
 export interface IQueryParse {
   [propName: string]: string;
 }
-
+export interface IPlainObject {
+  [key: string]: string | boolean;
+}
 export interface IAuthConfig {
   type: string;
   baseUrl: string;

@@ -1,6 +1,11 @@
 import todoAppServer from "../Api/axios.api";
 
-import { ILoginFormFields, IUserAuthResponse } from "../Types/types";
+import {
+  ILoginFormFields,
+  IPlainObject,
+  IUserAuthResponse,
+} from "../Types/types";
+
 export const authService = {
   async registration(
     regData: ILoginFormFields
@@ -25,9 +30,10 @@ export const authService = {
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
-      }
+      } else console.log(error);
     }
   },
+
   async logout() {
     try {
       await todoAppServer.get("auth/logout");
@@ -57,6 +63,20 @@ export const authService = {
       if (data) return data;
     } catch (error) {
       console.log("Нет данных авторизации");
+    }
+  },
+  async updateUserInfo(
+    updateUserDTO: IPlainObject
+  ): Promise<IUserAuthResponse | undefined> {
+    try {
+      const { data } = await todoAppServer.patch<IUserAuthResponse>(
+        "user/update",
+        updateUserDTO
+      );
+
+      if (data) return data;
+    } catch (error) {
+      console.log(error);
     }
   },
 };

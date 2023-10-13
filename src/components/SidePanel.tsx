@@ -51,7 +51,8 @@ export const SidePanel: FC = () => {
             style={{ display: "flex", flexDirection: "column" }}
           >
             <button onClick={() => navigate("/")}>Главная</button>
-            <button onClick={() => navigate("/main")}>Личная страница</button>
+            <button onClick={() => navigate("/main")}>секрет страница</button>
+            <button onClick={() => navigate("/lk")}>Аккаунт</button>
           </div>
           <button onClick={() => dispatch(logout())}>Выйти</button>
         </div>
