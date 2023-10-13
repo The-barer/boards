@@ -20,18 +20,12 @@ export const authService = {
   async login(
     loginData: ILoginFormFields
   ): Promise<IUserAuthResponse | undefined> {
-    try {
-      const { data } = await todoAppServer.post<IUserAuthResponse>(
-        "auth/login",
-        loginData
-      );
+    const { data } = await todoAppServer.post<IUserAuthResponse>(
+      "auth/login",
+      loginData
+    );
 
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      } else console.log(error);
-    }
+    return data;
   },
 
   async logout() {
@@ -40,6 +34,12 @@ export const authService = {
     } catch (error) {
       console.log(error);
     }
+  },
+  async activateUser(
+    code: string
+  ): Promise<{ message: string; email: string } | undefined> {
+    const { data } = await todoAppServer.get(`user/activate/${code}`);
+    return data;
   },
 
   async login0Auth(

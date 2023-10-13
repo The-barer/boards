@@ -3,8 +3,8 @@ import { authService } from "../Services/auth.service";
 import { login } from "../Store/User/userSlice";
 import { useAppDispatch } from "../Hooks/reduxHooks";
 import { ILoginFormFields } from "../Types/types";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ExternalAuth } from "../Components/ExternalAuth";
 
 export default function Auth() {
@@ -24,7 +24,26 @@ export default function Auth() {
     }
   };
   const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [message, setMessage] = useState<string | null>(null);
   const handelAuthType = (): void => setIsLogin(!isLogin);
+  const { activationCode } = useParams();
+  const load = useRef(false);
+
+  useEffect(() => {
+    if (!load.current) {
+      load.current = true;
+      activationCode &&
+        authService
+          .activateUser(activationCode)
+          .then((data) => {
+            console.log(data);
+            if (data) setMessage(data.message);
+          })
+          .catch((err) => {
+            setMessage(err.message);
+          });
+    }
+  }, [activationCode, message]);
 
   return (
     <div className="container" style={{ width: "100vw" }}>
@@ -37,6 +56,7 @@ export default function Auth() {
           alignItems: "center",
         }}
       >
+        {message && <h4>{message}</h4>}
         {isLogin ? <h3>LogIn</h3> : <h3>Registration</h3>}
 
         <LoginForm onSubmit={handelAuthForm} />
