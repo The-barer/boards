@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { IUserAuthResponse, IUserResponse } from "../../Types/types";
-import {
-  getAccessTokenFromLocalStorage,
-  removeTokenFromLocalStorage,
-  setAccessTokenToLocalStorage,
-} from "../../Helpers/localStorage.helper";
+import { IUserResponse } from "../../Types/types";
+import { removeTokenFromLocalStorage } from "../../Helpers/localStorage.helper";
 import { authService } from "../../Services/auth.service";
 
 interface UserState {
@@ -23,11 +19,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<IUserAuthResponse>) => {
-      state.user = action.payload.user;
+    login: (state, action: PayloadAction<IUserResponse>) => {
+      state.user = action.payload;
       state.isAuth = true;
-      !getAccessTokenFromLocalStorage() &&
-        setAccessTokenToLocalStorage(action.payload.accessToken);
     },
 
     logout: (state) => {

@@ -1,9 +1,9 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router/router";
 import { useEffect, useRef } from "react";
-import { getUserData } from "./Helpers/getUserData.helper";
 import { useAppDispatch } from "./Hooks/reduxHooks";
 import { login } from "./Store/User/userSlice";
+import { authService } from "./Services/auth.service";
 
 function App() {
   const isLoad = useRef(false);
@@ -11,8 +11,8 @@ function App() {
 
   useEffect(() => {
     const loginUser = async () => {
-      const data = await getUserData();
-      if (data) dispatch(login(data));
+      const user = await authService.getAuth();
+      if (user) dispatch(login(user));
     };
     if (isLoad.current === false) {
       loginUser();

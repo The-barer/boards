@@ -14,7 +14,13 @@ const todoAppServer = axios.create({
 });
 
 todoAppServer.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${getAccessTokenFromLocalStorage()}`;
+  const token = getAccessTokenFromLocalStorage();
+  if (token && !jwtExp(token)) {
+    removeTokenFromLocalStorage();
+  }
+
+  config.headers.Authorization = `Bearer ${token}`;
+  config.withCredentials = false;
   return config;
 });
 
@@ -25,22 +31,23 @@ todoAppServer.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config;
     if (error.response?.status === 401) {
-      const token = getAccessTokenFromLocalStorage();
-      if (token && !jwtExp(token)) {
-        removeTokenFromLocalStorage();
-      }
-      try {
-        const { data: tokens }: { data: ITokens } = await axios.get(
-          `${serverHost}/auth/token`,
-          {
-            withCredentials: true,
-          }
-        );
-        console.log("Получены новые токены: ", tokens);
-        tokens && setAccessTokenToLocalStorage(tokens.accessToken);
+      const newToken = await axios
+        .get(`${serverHost}/auth/token`, {
+          withCredentials: true,
+        })
+        .then((data) => {
+          const { accessToken }: ITokens = data.data;
+          accessToken && setAccessTokenToLocalStorage(accessToken);
+
+          return true;
+        })
+        .catch((err: AxiosError) => {
+          console.log(err.response?.data);
+          return false;
+        });
+      if (newToken) {
+        console.log("Получен новый токен! Обновляю страницу");
         return originalRequest && todoAppServer.request(originalRequest);
-      } catch (error) {
-        console.log("Требуется авторизация");
       }
     }
     return Promise.reject(error.response?.data);

@@ -5,14 +5,14 @@ export interface ILoginFormFields {
 
 export interface ITokens {
   accessToken: string;
-  refreshToken: string;
 }
+
 export interface IUserResponse {
   email: string;
   authUserId: string | null;
   userName: string;
   photo: string | null;
-  isAvtiveted: boolean;
+  isActiveted: boolean;
 }
 export interface IUserAuthResponse extends ITokens {
   user: IUserResponse;

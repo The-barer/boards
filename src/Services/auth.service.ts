@@ -4,6 +4,7 @@ import {
   ILoginFormFields,
   IPlainObject,
   IUserAuthResponse,
+  IUserResponse,
 } from "../Types/types";
 
 export const authService = {
@@ -55,22 +56,20 @@ export const authService = {
     return data;
   },
 
-  async getAuth(): Promise<IUserAuthResponse | undefined> {
+  async getAuth(): Promise<IUserResponse | undefined> {
     try {
-      const { data } = await todoAppServer.get<IUserAuthResponse>(
-        "auth/profile"
-      );
+      const { data } = await todoAppServer.get<IUserResponse>("user/profile");
       if (data) return data;
     } catch (error) {
-      console.log("Нет данных авторизации");
+      console.log(error);
     }
   },
   async updateUserInfo(
     updateUserDTO: IPlainObject
-  ): Promise<IUserAuthResponse | undefined> {
+  ): Promise<IUserResponse | undefined> {
     try {
-      const { data } = await todoAppServer.patch<IUserAuthResponse>(
-        "user/update",
+      const { data } = await todoAppServer.patch<IUserResponse>(
+        "user/profile",
         updateUserDTO
       );
 

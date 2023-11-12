@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import "../Styles/PersonalInfo.css";
 
-import { useAppDispatch, useAppSelector } from "../Hooks/reduxHooks";
+import { useAppSelector } from "../Hooks/reduxHooks";
 import { UserFormField } from "../Components/UserFormField";
 import { IPlainObject } from "../Types/types";
 import { authService } from "../Services/auth.service";
-import { login } from "../Store/User/userSlice";
 
 export default function UserPage() {
   const user = useAppSelector((state) => state.user.user);
   const [updatePage, setUpdatePage] = useState(false);
-  const dispatch = useAppDispatch();
 
   const [updatedData, setUpdatedData] = useState<IPlainObject>({});
 
@@ -31,7 +29,6 @@ export default function UserPage() {
   const handelSave = async () => {
     const user = await authService.updateUserInfo(updatedData);
     if (user) {
-      dispatch(login(user));
       setUpdatePage(true);
     }
   };

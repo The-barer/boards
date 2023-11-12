@@ -47,7 +47,7 @@ export const ExternalAuth = () => {
           authService
             .login0Auth(popupParams, authType)
             .then((data) => {
-              data && dispatch(login(data));
+              data && dispatch(login(data.user));
               navigate("/");
             })
             .catch(() => {

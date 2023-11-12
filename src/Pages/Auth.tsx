@@ -6,6 +6,7 @@ import { ILoginFormFields } from "../Types/types";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ExternalAuth } from "../Components/ExternalAuth";
+import { setAccessTokenToLocalStorage } from "../Helpers/localStorage.helper";
 
 export default function Auth() {
   const dispatch = useAppDispatch();
@@ -16,7 +17,8 @@ export default function Auth() {
       const data = await authService[authType](formFieldsData);
 
       if (data) {
-        dispatch(login(data));
+        dispatch(login(data.user));
+        setAccessTokenToLocalStorage(data.accessToken);
         navigate("/");
       }
     } catch (err) {
