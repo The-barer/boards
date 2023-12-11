@@ -1,7 +1,7 @@
 import { faBan, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { IPlainObject } from "../Types/types";
+import { IPlainObject } from "../Shared/Lib/Types/types";
 
 type UserInfoEdit = {
   data: {

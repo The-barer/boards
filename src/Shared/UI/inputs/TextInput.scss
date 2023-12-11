@@ -1,0 +1,30 @@
+// .input {
+//     padding-right: 25px;
+//     border: none;
+//     background-color: transparent;
+//     outline: none;
+//     &.valid {
+//         background-image: url('../assets/icons/circle_check.svg');
+//         background-size: contain;
+//         background-position: 98%;
+//         background-repeat: no-repeat;
+//     }
+
+//     &.invalid {
+//         background-image: url('../assets/icons/circle_warning.svg');
+//         background-size: contain;
+//         background-position: 98%;
+//         background-repeat: no-repeat;
+//     }
+// }
+
+// .inputField {
+//     display: flex;
+//     padding: 5px;
+//     border-radius: 5px;
+//     border: 1px solid #000000;
+//     &:has(input:focus) {
+//         border: 1px solid #ff0000;
+//         color: #ff0000;
+//     }
+// }

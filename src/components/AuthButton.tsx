@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { IAuthConfig } from "../Types/types";
+import { IAuthConfig } from "../Shared/Lib/Types/types";
 
 interface IAuthButton {
   onSubmit: (url: string, type: string) => void;

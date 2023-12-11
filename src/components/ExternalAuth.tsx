@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { authService } from "../Services/auth.service";
-import { useAppDispatch } from "../Hooks/reduxHooks";
-import { login } from "../Store/User/userSlice";
+import { authService } from "../Entities/User/API/auth.api";
+import { useAppDispatch } from "../Shared/Lib/Hooks/reduxHooks";
+import { login } from "../Entities/User/model/userSlice";
 import { useNavigate } from "react-router-dom";
 import { AuthButton } from "./AuthButton";
-import { authConfig } from "../Config/auth.config";
+import { authConfig } from "../Shared/Config/0auth.config";
 
 export const ExternalAuth = () => {
   const [externalPopup, setExternalPopup] = useState<Window | null>(null);

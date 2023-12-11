@@ -1,22 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import { useIsAuth } from "../Hooks/useIsAuth";
+import { useNavigate } from 'react-router-dom'
+
+import { useChekAuth } from '@/Entities/Session'
+import { useEffect } from 'react'
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const isAuth = useIsAuth();
+    const navigate = useNavigate()
+    const isAuthorized = useChekAuth()
 
-  return (
-    <>
-      <div>Home Page</div>
-      <p>Добро пожаловать в TheBoards - todoApp by Dmitry Barer</p>
-      <br />
-
-      {!isAuth && (
-        <div className="auth">
-          <p> Для использования приложения, выполните вход</p>
-          <button onClick={() => navigate("/auth")}>Пройти авторизацию</button>
+    useEffect(() => {
+        if (!isAuthorized) {
+            navigate('/auth')
+        }
+    }, [isAuthorized, navigate])
+    return (
+        <div style={{ backgroundColor: 'white' }}>
+            <p>Добро пожаловать в TheBoards - todoApp by Dmitry Barer</p>
+            <br />
         </div>
-      )}
-    </>
-  );
+    )
 }
