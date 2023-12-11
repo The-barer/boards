@@ -1,6 +1,6 @@
 import { IUserLoginData, IUserUpdateData } from '@/Entities/User'
 import { IToken } from '@/Shared/Lib/Types/types'
-import { SESSION_TAG, USER_TAG, baseApi } from '@/Shared/Api'
+import { SESSION_TAG, baseApi } from '@/Shared/Api'
 import { IUserAuthData } from '../model/sessionTypes'
 
 export const sessionApi = baseApi.injectEndpoints({
@@ -40,7 +40,6 @@ export const sessionApi = baseApi.injectEndpoints({
                 url: `/auth/logout`,
                 method: 'GET',
             }),
-            invalidatesTags: [USER_TAG],
         }),
 
         refreshToken: build.query<IToken, void>({
