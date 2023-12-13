@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
         ],
     },
     {
-        path: '/auth/:activationCode?',
+        path: '/auth/:type?',
         element: <Auth />,
         errorElement: <ErrorPage />,
     },

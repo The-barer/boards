@@ -1,5 +1,3 @@
-import '../Styles/PersonalInfo.css'
-
 export default function UserPage() {
     return (
         <div>

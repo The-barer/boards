@@ -62,13 +62,6 @@ export const useInput = (initialtype: InputType) => {
         setTouched(true)
     }
 
-    const onBlur = (e: React.FormEvent<HTMLInputElement>) => {
-        validate(e)
-        if (!touched) {
-            setTouched(true)
-        }
-    }
-
     const validate = (e: React.FormEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
         const errMessage = validation(value, initialtype)
@@ -79,13 +72,22 @@ export const useInput = (initialtype: InputType) => {
         if (errMessage && !error) {
             setError(errMessage)
         }
+        if (!touched) {
+            setTouched(true)
+        }
     }
 
     return {
         label: LABEL[initialtype],
         type: TYPE[initialtype],
 
-        inputOptions: { onBlur, onChange: validate, name: initialtype },
+        inputOptions: {
+            onBlur: validate,
+            onChange: validate,
+            name: initialtype,
+            placeholder: LABEL[initialtype],
+            id: initialtype,
+        },
         error,
         valid: !error && touched,
     }

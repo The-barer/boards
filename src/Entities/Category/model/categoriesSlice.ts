@@ -1,25 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../../App/appStore.ts";
-import { ICategory } from "./categories.types.ts";
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { ICategory } from './categoriesTypes.ts'
 
-const initialState: ICategory[] | [] = [];
+const initialState: { list: ICategory[] | [] } = { list: [] }
 
 export const categoriesSlice = createSlice({
-  name: "categories",
-  initialState,
-  reducers: {
-    setCategories: (state, action: PayloadAction<ICategory[]>) => {
-      state = action.payload;
+    name: 'categories',
+    initialState,
+    reducers: {
+        setCategories: (state, { payload }: PayloadAction<ICategory[]>) => {
+            state.list = payload
+        },
+
+        clearCategories: (state) => {
+            state.list = []
+        },
     },
+})
 
-    clearCategories: () => initialState,
-  },
-});
+export const { setCategories, clearCategories } = categoriesSlice.actions
 
-export const { setCategories, clearCategories } = categoriesSlice.actions;
+export const selectCategories = (state: RootState) => state
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCategories = (state: RootState) => state.categories;
-
-export default categoriesSlice.reducer;
+export default categoriesSlice.reducer
