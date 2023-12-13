@@ -10,11 +10,11 @@ interface Props extends PropsWithChildren {
 }
 
 type InputOptions = {
-    placeholder: string
-    name: string
-    id: string
-    onChange: (e: React.FormEvent<HTMLInputElement>) => void
-    onBlur: (e: React.FormEvent<HTMLInputElement>) => void
+    placeholder?: string
+    name?: string
+    id?: string
+    onChange?: (e: React.FormEvent<HTMLInputElement>) => void
+    onBlur?: (e: React.FormEvent<HTMLInputElement>) => void
 }
 
 export const InputWithMsg = (props: Props) => {

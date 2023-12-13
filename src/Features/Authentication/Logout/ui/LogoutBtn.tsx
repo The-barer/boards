@@ -6,16 +6,10 @@ import { logoutThunk } from '..'
 export const LogoutBtn = () => {
     const LOGOUT_TEXT = 'Log out'
     const dispatch = useAppDispatch()
+    // const navigate = useNavigate()
 
     const handelLogout = async () => {
         dispatch(logoutThunk())
-            .unwrap()
-            .then(() => {
-                console.log('Logged out')
-            })
-            .catch((err) => {
-                console.error(err)
-            })
     }
 
     return (

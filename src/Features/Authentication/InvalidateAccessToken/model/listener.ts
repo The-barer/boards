@@ -2,7 +2,7 @@ import { createListenerMiddleware, type TypedStartListening } from '@reduxjs/too
 import { invalidateAccessToken } from '@/Shared/Api/invalidateTokenEvent'
 import { getAccessToken } from '@/Shared/Lib/Helpers/getAccessToken'
 import { sessionApi } from '@/Entities/Session/'
-import { setAccessTokenToLocalStorage } from '@/Shared/Lib/Helpers/localStorage.helper'
+import { logoutThunk } from '../../Logout'
 
 export const invalidateAccessTokenListener = createListenerMiddleware()
 
@@ -14,19 +14,26 @@ export const startInvalidateAccessTokenListener =
 startInvalidateAccessTokenListener({
     actionCreator: invalidateAccessToken,
     effect: async (_, api) => {
-        const token = getAccessToken()
+        let token = getAccessToken()
+
+        if (token) {
+            return
+        }
+
+        const refresh = document.cookie.indexOf('refreshToken')
+
+        if (!token && refresh === 0) {
+            await api
+                .dispatch(sessionApi.endpoints.refreshToken.initiate())
+                .unwrap()
+                .then(({ accessToken }) => {
+                    token = accessToken
+                })
+                .catch(() => console.log('ошибка обновления токена'))
+        }
 
         if (!token) {
-            try {
-                const { accessToken } = await api
-                    .dispatch(sessionApi.endpoints.refreshToken.initiate())
-                    .unwrap()
-
-                accessToken && setAccessTokenToLocalStorage(accessToken)
-                console.log(` Get new accessToken: ${accessToken}`)
-            } catch {
-                console.log('новый токен не получен')
-            }
+            api.dispatch(logoutThunk())
         }
     },
 })

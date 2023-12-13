@@ -1,6 +1,7 @@
 export {
     selectIsAuthorized,
     selectAccessToken,
+    selectSession,
     clearSessionData,
     setToken,
     sessionSlice,
@@ -10,11 +11,11 @@ export {
     sessionApi,
     useLogoutMutation,
     useSigninQuery,
-    useRefreshTokenQuery,
+    useRefreshTokenMutation,
     useLoginQuery,
     useLoginVKQuery,
     useLoginGoogleQuery,
 } from './api/session.api'
 
-export { invalidateAccessTokenListener } from './model/listener'
-export { useChekAuth } from './model/useChekAuth'
+export { invalidateAccessTokenListener } from '../../Features/Authentication/InvalidateAccessToken/model/listener'
+export { useSession } from './model/useSession'

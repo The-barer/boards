@@ -14,8 +14,8 @@ export interface IUserLoginData {
 }
 
 export interface IUserCreateProfile extends IUserLoginData {
-    userName: string
-    photo: string
+    userName?: string | null
+    photo?: string | null
 }
 export interface IUserUpdateData extends Partial<IUserCreateProfile> {}
 

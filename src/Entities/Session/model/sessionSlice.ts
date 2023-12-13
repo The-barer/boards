@@ -9,6 +9,7 @@ import { sessionApi } from '../api/session.api'
 const initialState: SessionSlice = {
     accessToken: null,
     isAuthorized: null,
+    loading: false,
 }
 
 export const sessionSlice = createSlice({
@@ -37,6 +38,14 @@ export const sessionSlice = createSlice({
                 },
             )
             .addMatcher(
+                sessionApi.endpoints.signin.matchFulfilled,
+                (state, { payload }: PayloadAction<IUserAuthData>) => {
+                    state.isAuthorized = true
+                    state.accessToken = payload.accessToken
+                    setAccessTokenToLocalStorage(payload.accessToken)
+                },
+            )
+            .addMatcher(
                 sessionApi.endpoints.loginVK.matchFulfilled,
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
                     state.isAuthorized = true
@@ -49,20 +58,32 @@ export const sessionSlice = createSlice({
                 state.isAuthorized = false
                 removeTokenFromLocalStorage()
             })
+
             .addMatcher(
                 sessionApi.endpoints.refreshToken.matchFulfilled,
                 (state, { payload }: PayloadAction<AccessToken>) => {
                     state.isAuthorized = true
                     state.accessToken = payload.accessToken
+                    state.loading = false
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
+            .addMatcher(sessionApi.endpoints.refreshToken.matchPending, (state) => {
+                state.loading = true
+            })
+            .addMatcher(sessionApi.endpoints.refreshToken.matchRejected, (state) => {
+                state.isAuthorized = false
+                state.accessToken = null
+                state.loading = false
+                removeTokenFromLocalStorage()
+            })
     },
 })
 
 export const { clearSessionData, setToken } = sessionSlice.actions
 
 export const selectIsAuthorized = (state: RootState) => state.session.isAuthorized
+export const selectSession = (state: RootState) => state.session
 export const selectAccessToken = (state: RootState) => state.session.accessToken
 
 export default sessionSlice.reducer

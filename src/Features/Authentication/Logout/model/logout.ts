@@ -1,9 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { clearSessionData, sessionApi } from '@/Entities/Session'
-import { USER_TAG, isFetchBaseQueryError, isServerError } from '@/Shared/Api'
-import { userApi } from '@/Entities/User/API/user.api'
+import { SESSION_TAG, isFetchBaseQueryError, isServerError } from '@/Shared/Api'
+
 import { clearUserData } from '@/Entities/User'
-import { wait } from '@/Shared/Lib/Helpers'
 
 export const logoutThunk = createAsyncThunk<void, void, { state: RootState }>(
     'authentication/logout',
@@ -13,10 +12,7 @@ export const logoutThunk = createAsyncThunk<void, void, { state: RootState }>(
             dispatch(clearUserData())
             dispatch(clearSessionData())
 
-            await wait(10)
-
-            dispatch(userApi.util.invalidateTags([USER_TAG]))
-            dispatch(sessionApi.util.resetApiState())
+            dispatch(sessionApi.util.invalidateTags([SESSION_TAG]))
         } catch (error) {
             if (isFetchBaseQueryError(error)) {
                 if (isServerError(error.data)) {

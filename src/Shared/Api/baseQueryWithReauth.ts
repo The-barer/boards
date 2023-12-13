@@ -4,7 +4,6 @@ import { type BaseQueryApi, type QueryReturnValue } from '@reduxjs/toolkit/src/q
 import { baseQuery } from './baseQuery'
 import { invalidateAccessToken } from './invalidateTokenEvent'
 import { Mutex } from 'async-mutex'
-import { wait } from '../Lib/Helpers'
 
 const mutex = new Mutex()
 
@@ -16,21 +15,19 @@ export async function baseQueryWithReauth(
     extraOptions: object,
 ): Promise<QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>> {
     await mutex.waitForUnlock()
-    let result = await baseQuery(args, api, extraOptions)
-    if (typeof result.error?.status === 'number' && AUTH_ERROR_CODES.has(result.error.status)) {
-        if (!mutex.isLocked()) {
-            const release = await mutex.acquire()
 
-            try {
-                api.dispatch(invalidateAccessToken())
-                await wait(10)
-            } finally {
-                release()
-            }
-        } else {
-            await mutex.waitForUnlock()
-            result = await baseQuery(args, api, extraOptions)
+    const release = await mutex.acquire()
+
+    try {
+        const result = await baseQuery(args, api, extraOptions)
+
+        if (typeof result.error?.status === 'number' && AUTH_ERROR_CODES.has(result.error.status)) {
+            api.dispatch(invalidateAccessToken())
+            //тут надо дождаться отработки события. как понять?
         }
+
+        return result
+    } finally {
+        release()
     }
-    return result
 }
