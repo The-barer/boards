@@ -1,11 +1,11 @@
 export interface ICategory {
-    id: number
+    id: string
     title: string
     priorityOrder: number
     createdAt: string
     updatedAt: string
     tasks?: {
-        id: number
+        id: string
         title: string
         description: string
         status: string

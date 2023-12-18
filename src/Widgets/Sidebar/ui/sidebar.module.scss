@@ -1,10 +1,8 @@
 .sidebar {
     display: grid;
     grid-template-rows: 3rem 1fr 3rem;
+    grid-template-areas: 'user' 'content' 'action';
     padding: 1.25rem 1rem;
     gap: 4rem;
     background: var(--background-background-primary, #f3f4f6);
-}
-.boards {
-    position: relative;
 }
