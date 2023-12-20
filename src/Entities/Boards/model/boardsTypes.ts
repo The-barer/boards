@@ -1,4 +1,4 @@
-export interface ICategory {
+export interface IBoard {
     id: string
     title: string
     priorityOrder: number

@@ -1,12 +1,21 @@
-import { ICategory, CategoryItem } from '@/Entities/Category'
+import { IBoard, BoardItem } from '@/Entities/Boards'
+import { useState } from 'react'
+import { useAppDispatch } from '@/Shared/Lib/Hooks'
+import { boardsApi } from '@/Entities/Boards/api/boards.api'
 
 type DraggableList = {
-    arr: ICategory[]
+    arr: IBoard[]
 }
 
-export const DraggableList = ({ arr }: DraggableList) => {
-    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, item: ICategory) => {
-        console.log(e, item)
+export const DraggableList = ({ arr = [] }: DraggableList) => {
+    const [dragged, setDragged] = useState<number | null>(null)
+    const dispatch = useAppDispatch()
+
+    const sortedArr = Array.from(arr).sort((a, b) => a.priorityOrder - b.priorityOrder)
+
+    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, i: number) => {
+        e.stopPropagation()
+        setDragged(i)
     }
     const dragEndHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -20,18 +29,33 @@ export const DraggableList = ({ arr }: DraggableList) => {
     const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
     }
-    const dragDropHandler = (e: React.DragEvent<HTMLDivElement>, item: ICategory) => {
+    const dragDropHandler = (e: React.DragEvent<HTMLDivElement>, current: number) => {
         e.preventDefault()
-        console.log(e, item)
+        if (dragged !== null && dragged !== current) {
+            const temp = sortedArr.splice(dragged, 1)[0]
+            sortedArr.splice(current, 0, temp)
+
+            setDragged(null)
+        }
+        sortedArr.forEach((element, i) => {
+            if (element.priorityOrder !== i) {
+                dispatch(
+                    boardsApi.endpoints.updateCategory.initiate({
+                        id: element.id,
+                        body: { priorityOrder: i },
+                    }),
+                )
+            }
+        })
     }
 
     return (
-        <div>
-            {arr.map((item, i) => {
+        <>
+            {sortedArr.map((item, i) => {
                 return (
                     <div
                         onDragStart={(e) => {
-                            dragStartHandler(e, item)
+                            dragStartHandler(e, i)
                         }}
                         onDragLeave={(e) => {
                             dragLeaveHandler(e)
@@ -46,15 +70,15 @@ export const DraggableList = ({ arr }: DraggableList) => {
                             dragEndHandler(e)
                         }}
                         onDrop={(e) => {
-                            dragDropHandler(e, item)
+                            dragDropHandler(e, i)
                         }}
                         draggable
                         key={i}
                     >
-                        <CategoryItem {...item} />
+                        <BoardItem {...item} />
                     </div>
                 )
             })}
-        </div>
+        </>
     )
 }

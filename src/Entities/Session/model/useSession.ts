@@ -1,13 +1,14 @@
 import { useAppDispatch, useAppSelector } from '@/Shared/Lib/Hooks'
 import { invalidateAccessToken } from '@/Shared/Api'
-import { getAccessTokenFromLocalStorage } from '@/Shared/Lib/Helpers/localStorage.helper'
+
 import { selectSession, setToken } from '..'
+import { getAccessToken } from '@/Shared/Lib/Helpers/getAccessToken'
 
 export const useSession = () => {
     const dispatch = useAppDispatch()
     const session = useAppSelector(selectSession)
     if (!session.isAuthorized) {
-        const token = getAccessTokenFromLocalStorage()
+        const token = getAccessToken()
         if (token) {
             console.log('диспатч сессии из локал стороджа')
             dispatch(setToken(token))

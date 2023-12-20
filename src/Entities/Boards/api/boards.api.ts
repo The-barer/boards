@@ -1,14 +1,14 @@
 import { CATEGORIES_TAG, baseApi } from '@/Shared/Api'
 import {
-    ICategory,
+    IBoard,
     ICategoryChangeResponse,
     ICategoryCreateDTO,
     ICategoryUpdateDTO,
-} from '../model/categoriesTypes'
+} from '../model/boardsTypes'
 
-export const categoriesApi = baseApi.injectEndpoints({
+export const boardsApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        createCategory: build.mutation<ICategory, ICategoryCreateDTO>({
+        createCategory: build.mutation<IBoard, ICategoryCreateDTO>({
             query: (body) => ({
                 url: `/category`,
                 method: 'POST',
@@ -37,7 +37,7 @@ export const categoriesApi = baseApi.injectEndpoints({
             invalidatesTags: [CATEGORIES_TAG],
         }),
 
-        getDetailedCategory: build.query<ICategory, string>({
+        getDetailedCategory: build.query<IBoard, string>({
             query: (id) => ({
                 url: `/category/${id}`,
                 method: 'GET',
@@ -45,7 +45,7 @@ export const categoriesApi = baseApi.injectEndpoints({
             providesTags: [CATEGORIES_TAG],
         }),
 
-        getAllCategories: build.query<ICategory[], void>({
+        getAllCategories: build.query<IBoard[], void>({
             query: () => ({
                 url: `/category`,
                 method: 'GET',
@@ -61,4 +61,4 @@ export const {
     useCreateCategoryMutation,
     useDeleteCategoryMutation,
     useUpdateCategoryMutation,
-} = categoriesApi
+} = boardsApi

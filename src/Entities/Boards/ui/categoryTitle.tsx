@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/Shared/Lib/Hooks'
 import style from './category.module.scss'
-import { categoriesApi } from '../api/categories.api'
+import { boardsApi } from '../api/boards.api'
 
 type CategoryRename = {
     hide: () => void
@@ -24,7 +24,7 @@ export const CategoryTitle = ({ hide, editable, title, id }: CategoryRename) => 
         if (title !== newTitle) {
             console.log(id, newTitle)
             await dispatch(
-                categoriesApi.endpoints.updateCategory.initiate({ id, body: { title: newTitle } }),
+                boardsApi.endpoints.updateCategory.initiate({ id, body: { title: newTitle } }),
             )
                 .unwrap()
                 .then(() => {

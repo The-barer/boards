@@ -7,6 +7,7 @@ import { Secret } from '../Pages/Secret'
 import { ProtectedRoute } from '@/Features/Authentication/ProtectedRoute'
 import { Callback } from '../Pages/Callback'
 import PersonalInfo from '../Pages/PersonalInfo'
+import { Board } from '@/Pages/Board'
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,14 @@ export const router = createBrowserRouter([
                 element: (
                     <ProtectedRoute role="cat">
                         <PersonalInfo />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/board/:boardId',
+                element: (
+                    <ProtectedRoute>
+                        <Board />
                     </ProtectedRoute>
                 ),
             },

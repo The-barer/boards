@@ -2,7 +2,7 @@ import editIcon from '@/Shared/UI/assets/icons/edit-edit-pencil-line-02.svg'
 import delIcon from '@/Shared/UI/assets/icons/icons-delete-24-px.svg'
 import style from './category.module.scss'
 import { useAppDispatch } from '@/Shared/Lib/Hooks'
-import { categoriesApi } from '../api/categories.api'
+import { boardsApi } from '../api/boards.api'
 
 type CategoryActions = {
     hide: () => void
@@ -21,7 +21,7 @@ export const CategoryActions = ({ hide, rename, id }: CategoryActions) => {
 
     const handelDelete = async () => {
         hide()
-        await dispatch(categoriesApi.endpoints.deleteCategory.initiate(id))
+        await dispatch(boardsApi.endpoints.deleteCategory.initiate(id))
             .unwrap()
             .then(() => {
                 console.log('Deleted')

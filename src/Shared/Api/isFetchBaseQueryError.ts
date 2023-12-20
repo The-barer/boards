@@ -13,8 +13,11 @@ export function isServerError(error: unknown): error is ServerError {
     return (
         typeof error === 'object' &&
         error != null &&
-        'message' in error &&
-        'statusCode' in error &&
-        'error' in error
+        'data' in error &&
+        typeof error.data === 'object' &&
+        error.data != null &&
+        'message' in error.data &&
+        'statusCode' in error.data &&
+        'error' in error.data
     )
 }
