@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { CreateTask } from '@/Features/Task/CreateTask'
 
 const tasks = [
     {
@@ -56,5 +57,10 @@ const tasks = [
 export const Board = () => {
     const { boardId } = useParams()
 
-    return <div>Board {boardId}</div>
+    return (
+        <div>
+            <div className="title">Board {boardId}</div>
+            <CreateTask />
+        </div>
+    )
 }

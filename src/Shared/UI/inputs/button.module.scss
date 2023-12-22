@@ -69,3 +69,55 @@ $neutral-16: #23262f;
         box-shadow: 3px 2px 5px 0px rgb(73 73 73 / 40%);
     }
 }
+
+.btnPrimary {
+    color: var(--text-text-on-color, #fff);
+    text-align: center;
+    font-family: Manrope;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.25rem;
+    letter-spacing: 0.00625rem;
+
+    display: flex;
+    width: 10rem;
+    height: 3rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 6.25rem;
+    border: none;
+    background: var(--controls-primary-controls-primary, #0a68f5);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.btnSecondary {
+    color: var(--text-text-control, #0a68f5);
+    text-align: center;
+    font-family: Manrope;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.25rem;
+    letter-spacing: 0.00625rem;
+
+    display: flex;
+    width: 10rem;
+    height: 3rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: stretch;
+    border-radius: 6.25rem;
+    border: none;
+    background: var(--controls-secondary-controls-secondary, #cee1fd);
+    &:hover {
+        cursor: pointer;
+    }
+}
