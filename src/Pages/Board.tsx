@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { CreateTask } from '@/Features/Task/CreateTask'
+import { AddTask, CreateTask } from '@/Features/Task/CreateTask'
 
 const tasks = [
     {
@@ -60,7 +60,8 @@ export const Board = () => {
     return (
         <div>
             <div className="title">Board {boardId}</div>
-            <CreateTask />
+            <AddTask />
+            <CreateTask close={() => console.log('close')} />
         </div>
     )
 }
