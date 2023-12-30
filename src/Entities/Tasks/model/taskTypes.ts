@@ -5,8 +5,8 @@ export interface ITask {
     status: string
     dueDate: Date | null
     priorityOrder: number
-    createdAt: Date
-    updatedAt: Date
+    createdAt: Date | string
+    updatedAt: Date | string
     category?: {
         id: string
         title: string
@@ -17,11 +17,13 @@ export interface ITask {
 }
 
 export interface ITaskCreateDTO {
+    boardId: string
+
     title: string
-    description?: string
-    status?: string
-    dueDate?: Date | null
-    priorityOrder?: number
+    description?: string | undefined
+    status?: string | undefined
+    dueDate?: number | null
+    priorityOrder?: number | undefined
 }
 
 export interface ITaskUpdateDTO extends Partial<ITaskCreateDTO> {
@@ -32,10 +34,10 @@ export interface ITaskChangeResponse {
     message: string
 }
 
-export enum TaskStatus {
+export const enum TaskStatus {
     BACKLOG = 'backlog',
     TODO = 'todo',
     INPROGRESS = 'inprogress',
-    REVIEW = 'review1',
+    REVIEW = 'review',
     DONE = 'done',
 }

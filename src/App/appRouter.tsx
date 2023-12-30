@@ -7,7 +7,7 @@ import { Secret } from '../Pages/Secret'
 import { ProtectedRoute } from '@/Features/Authentication/ProtectedRoute'
 import { Callback } from '../Pages/Callback'
 import PersonalInfo from '../Pages/PersonalInfo'
-import { Board } from '@/Pages/Board'
+import { BoardPage } from '@/Pages/BoardPage'
 
 export const router = createBrowserRouter([
     {
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
                 path: '/board/:boardId',
                 element: (
                     <ProtectedRoute>
-                        <Board />
+                        <BoardPage />
                     </ProtectedRoute>
                 ),
             },

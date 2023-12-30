@@ -29,7 +29,10 @@ startInvalidateAccessTokenListener({
                 .then(({ accessToken }) => {
                     token = accessToken
                 })
-                .catch(() => console.log('ошибка обновления токена'))
+                .catch(() => {
+                    document.cookie = 'refreshToken' + '=; Max-Age=0'
+                    console.log('ошибка обновления токена')
+                })
         }
 
         if (!token) {

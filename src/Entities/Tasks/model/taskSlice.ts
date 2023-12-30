@@ -63,9 +63,9 @@ export const tasksSlice = createSlice({
 
 export const { clearTasks } = tasksSlice.actions
 
-export const tasksList = (state: RootState) => state.tasks.list
-export const tasksDetails = (state: RootState) => state.tasks.detailed
-export const tasksNotEmpty = (state: RootState) => state.tasks.notEmpty
-export const tasksStatuses = (state: RootState) => state.tasks.defaultStatuses
+export const selectTasks = (state: RootState) => state.tasks.list
+export const selectTasksDetails = (state: RootState) => state.tasks.detailed
+export const selectTasksNotEmpty = (state: RootState) => state.tasks.notEmpty
+export const selectTasksStatuses = (state: RootState) => state.tasks.defaultStatuses
 
 export default tasksSlice.reducer

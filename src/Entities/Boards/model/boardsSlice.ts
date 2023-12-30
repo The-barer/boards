@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { IBoard } from './boardsTypes.ts'
 import { boardsApi } from '../api/boards.api.ts'
 
-const initialState: { list: IBoard[] | []; detailed: IBoard | null; notEmpty: boolean } = {
+const initialState: { list: IBoard[]; detailed: IBoard | null; notEmpty: boolean } = {
     list: [],
     detailed: null,
     notEmpty: false,

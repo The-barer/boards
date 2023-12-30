@@ -23,8 +23,10 @@ export const Layout = () => {
         <div
             style={{
                 display: 'flex',
-                width: '100vw',
+                minWidth: '100vw',
+                width: 'fit-content',
                 height: '100vh',
+                gap: '1rem',
                 backgroundColor: 'white',
             }}
         >

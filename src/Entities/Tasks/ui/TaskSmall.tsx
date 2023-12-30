@@ -3,8 +3,8 @@ import style from './task.module.scss'
 
 import { useNavigate } from 'react-router-dom'
 
-export const BoardItem = (props: ITask) => {
-    const { title, description, dueDate } = props
+export const TaskSmall = (props: ITask) => {
+    const { title, description } = props
     const navigate = useNavigate()
 
     return (
@@ -16,7 +16,6 @@ export const BoardItem = (props: ITask) => {
         >
             <div className={style.taskTitle}>{title}</div>
             <div className={style.taskDescription}>{description}</div>
-            {dueDate && <div className={style.date}>{dueDate.toDateString()}</div>}
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { CreateTask } from '..'
 import { useAppDispatch } from '@/Shared/Lib/Hooks'
 import { taskApi } from '@/Entities/Tasks/api/task.api'
+import { ITaskCreateDTO } from '@/Entities/Tasks'
 
 export const AddTask = () => {
     const [showCreateTask, setShowCreateTask] = useState(false)
@@ -12,20 +13,26 @@ export const AddTask = () => {
     const close = () => {
         setShowCreateTask(false)
     }
-    const toggel = () => {
+    const toggle = () => {
         setShowCreateTask(!showCreateTask)
     }
 
-    const createTask = (task) => {
-        const { boardId, ...newTask } = task
-        dispatch(taskApi.endpoints.createTask.initiate({ boardId, newTask }))
+    const createTask = async (task: ITaskCreateDTO) => {
+        try {
+            console.log(task)
+            await dispatch(taskApi.endpoints.createTask.initiate(task)).unwrap()
+            return close()
+        } catch (e) {
+            console.log(e)
+        }
     }
+
     return (
         <>
-            <button className={style.addTask} onClick={toggel}>
+            <button className={style.addTask} onClick={toggle}>
                 <img src={addIcon} alt="add task" />
             </button>
-            {showCreateTask && <CreateTask close={close} />}
+            {showCreateTask && <CreateTask close={close} onCreate={createTask} />}
         </>
     )
 }

@@ -1,14 +1,16 @@
 import { useParams } from 'react-router-dom'
-import { AddTask, CreateTask } from '@/Features/Task/CreateTask'
+import { ITask } from '@/Entities/Tasks'
 
-const tasks = [
+import { TasksBoard } from '@/Widgets/TasksBoard'
+
+const tasks: ITask[] = [
     {
         id: '4f259a07-c2a7-48e7-89d1-6d895c89a998',
         title: 'таска',
         description: '',
         status: 'inprogress',
         dueDate: null,
-        priorityOrder: 2,
+        priorityOrder: 0,
         createdAt: '2023-11-22T18:55:40.081Z',
         updatedAt: '2023-11-22T18:55:40.081Z',
     },
@@ -18,7 +20,7 @@ const tasks = [
         description: 'Описать суть таски',
         status: 'done',
         dueDate: null,
-        priorityOrder: 3,
+        priorityOrder: 1,
         createdAt: '2023-11-22T18:56:13.544Z',
         updatedAt: '2023-11-22T19:37:44.574Z',
     },
@@ -28,7 +30,7 @@ const tasks = [
         description: 'Описать суть таски',
         status: 'backlog',
         dueDate: null,
-        priorityOrder: 3,
+        priorityOrder: 2,
         createdAt: '2023-12-01T08:22:03.064Z',
         updatedAt: '2023-12-01T08:22:03.064Z',
     },
@@ -48,20 +50,19 @@ const tasks = [
         description: 'Описать суть таски',
         status: 'review1',
         dueDate: null,
-        priorityOrder: 3,
+        priorityOrder: 4,
         createdAt: '2023-12-01T08:23:43.965Z',
         updatedAt: '2023-12-01T08:23:43.965Z',
     },
 ]
 
-export const Board = () => {
+export const BoardPage = () => {
     const { boardId } = useParams()
 
     return (
         <div>
             <div className="title">Board {boardId}</div>
-            <AddTask />
-            <CreateTask close={() => console.log('close')} />
+            <TasksBoard boardId={'05cc762b-272a-4a2a-a35d-6f404ab99b3c'} />
         </div>
     )
 }
