@@ -62,7 +62,7 @@ export const BoardPage = () => {
     return (
         <div>
             <div className="title">Board {boardId}</div>
-            <TasksBoard boardId={'05cc762b-272a-4a2a-a35d-6f404ab99b3c'} />
+            {boardId && <TasksBoard boardId={boardId} />}
         </div>
     )
 }

@@ -10,7 +10,6 @@ export const DraggableList = <P,>({ arr = [], updateFn, renderElement }: DraggLi
     const [dragged, setDragged] = useState<number | null>(null)
 
     const sortedArr = Array.from(arr)
-    console.log(arr)
 
     const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, i: number) => {
         e.stopPropagation()

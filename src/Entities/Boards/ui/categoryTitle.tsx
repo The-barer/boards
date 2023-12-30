@@ -27,9 +27,6 @@ export const CategoryTitle = ({ hide, editable, title, id }: CategoryRename) => 
                 boardsApi.endpoints.updateCategory.initiate({ id, body: { title: newTitle } }),
             )
                 .unwrap()
-                .then(() => {
-                    console.log('Category updated')
-                })
                 .catch((err) => {
                     console.log(err.data.message)
                 })
