@@ -24,7 +24,7 @@ export const Layout = () => {
             style={{
                 display: 'flex',
                 minWidth: '100vw',
-                width: 'fit-content',
+                width: '100vw',
                 height: '100vh',
                 gap: '1rem',
                 backgroundColor: 'white',

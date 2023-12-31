@@ -1,9 +1,11 @@
-import addIcon from '@/Shared/UI/assets/icons/add_grey.svg'
-import style from './createTask.module.scss'
+/// <reference types="vite-plugin-svgr/client" />
+
+import btn from '@/Shared/UI/inputs/button.module.scss'
+import AddIcon from '@/Shared/UI/assets/icons/add.svg?react'
 import { useState } from 'react'
 import { CreateTask } from '..'
 
-export const AddTask = () => {
+export const AddTaskBlue = () => {
     const [showCreateTask, setShowCreateTask] = useState(false)
 
     const close = () => {
@@ -12,11 +14,11 @@ export const AddTask = () => {
     const toggle = () => {
         setShowCreateTask(!showCreateTask)
     }
-
     return (
         <>
-            <button className={style.addTask} onClick={toggle}>
-                <img src={addIcon} alt="add task" />
+            <button className={btn.addBlue} onClick={toggle}>
+                <AddIcon fill="white" />
+                <span>Add task</span>
             </button>
             {showCreateTask && <CreateTask close={close} />}
         </>

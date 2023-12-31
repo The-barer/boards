@@ -1,11 +1,11 @@
-import { useAppSelector } from '@/Shared/Lib/Hooks'
+import { useAppDispatch, useAppSelector } from '@/Shared/Lib/Hooks'
 
 import { selectTasksStatuses } from '@/Entities/Tasks/model/taskSlice'
 import { boardsList } from '@/Entities/Boards'
 
 import style from './createTask.module.scss'
 import btnStyle from '@/Shared/UI/inputs/button.module.scss'
-import { ITaskCreateDTO } from '@/Entities/Tasks'
+import { ITaskCreateDTO, taskApi } from '@/Entities/Tasks'
 
 export type CreateTask = {
     title: HTMLInputElement
@@ -16,15 +16,21 @@ export type CreateTask = {
     boardId: HTMLSelectElement
 }
 
-export const CreateTask = ({
-    close,
-    onCreate,
-}: {
-    close: () => void
-    onCreate: (task: ITaskCreateDTO) => Promise<void>
-}) => {
+export const CreateTask = ({ close }: { close: () => void }) => {
     const statuses = useAppSelector(selectTasksStatuses)
     const boards = useAppSelector(boardsList)
+
+    const dispatch = useAppDispatch()
+
+    const onCreate = async (task: ITaskCreateDTO) => {
+        try {
+            console.log(task)
+            await dispatch(taskApi.endpoints.createTask.initiate(task)).unwrap()
+            return close()
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     const handelSubmit = (e: React.FormEvent<HTMLFormElement & CreateTask>) => {
         e.preventDefault()
