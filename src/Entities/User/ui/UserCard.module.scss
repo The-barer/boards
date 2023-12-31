@@ -1,0 +1,37 @@
+$text-secondary: #585f74;
+$card-2: #f3f4f6;
+
+.card {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    padding: 12px;
+    gap: 4px;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    min-width: 12rem;
+    color: #000;
+
+    font-family: Manrope;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.25rem;
+    letter-spacing: 0.00625rem;
+    &.small {
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0px 2px 10px 3px rgba(4, 42, 98, 0.12), 0px 1px 2px 0px rgba(4, 42, 98, 0.12);
+    }
+}
+
+.avatar {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    padding: 3px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    background: var($card-2, #f3f4f6);
+}

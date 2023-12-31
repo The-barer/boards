@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400&display=swap');
+
+:root {
+    --background-background-primary: #f3f4f6;
+    --text-secondary: #585f74;
+    --text-control: #0a68f5;
+    --text-text-control: #0a68f5;
+    --text-text-on-color: #ffffff;
+    --controls-primary-controls-primary: #0a68f5;
+    --controls-neutral-controls-neutral: #e8e9ed;
+    --controls-secondary-controls-secondary: #cee1fd;
+    --primary-primary-2: #00040a;
+    --color-danger: #b81427;
+    --card-card-2: #f3f4f6;
+}
+
+body {
+    background-color: #f3f4f6;
+    box-sizing: content-box;
+}
+
+.container {
+    width: 80vw;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+}
