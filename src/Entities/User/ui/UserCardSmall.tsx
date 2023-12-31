@@ -4,7 +4,6 @@ import { useProfileQuery } from '../API/user.api'
 
 export const UserCardSmall = () => {
     const { data, isLoading } = useProfileQuery()
-    // const { data, isLoading } = { data: false, isLoading: false }
 
     if (isLoading) {
         return <div className="loader">Loading...</div>

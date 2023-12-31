@@ -20,7 +20,7 @@ export const BoardItem = (props: IBoard) => {
                 navigate(`/board/${props.id}`)
             }}
         >
-            <CategoryTitle hide={() => setEditTitle(false)} {...props} editable={editTitle} />
+            <CategoryTitle onHide={() => setEditTitle(false)} {...props} editable={editTitle} />
 
             <button
                 className={style.openActions}
@@ -32,8 +32,8 @@ export const BoardItem = (props: IBoard) => {
             </button>
             {showActions && (
                 <CategoryActions
-                    hide={() => setShowActions(false)}
-                    rename={() => setEditTitle(!editTitle)}
+                    onHide={() => setShowActions(false)}
+                    onRename={() => setEditTitle(!editTitle)}
                     {...props}
                 />
             )}

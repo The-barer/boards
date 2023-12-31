@@ -3,13 +3,13 @@ import style from './category.module.scss'
 import { boardsApi } from '../api/boards.api'
 
 type CategoryRename = {
-    hide: () => void
+    onHide: () => void
     editable: boolean
     title: string
     id: string
 }
 
-export const CategoryTitle = ({ hide, editable, title, id }: CategoryRename) => {
+export const CategoryTitle = ({ onHide, editable, title, id }: CategoryRename) => {
     const dispatch = useAppDispatch()
 
     const handelSubmit = async (
@@ -17,7 +17,7 @@ export const CategoryTitle = ({ hide, editable, title, id }: CategoryRename) => 
     ) => {
         e.preventDefault()
         e.stopPropagation()
-        hide()
+        onHide()
 
         const newTitle = e.currentTarget.newTitle.value
 
@@ -39,7 +39,7 @@ export const CategoryTitle = ({ hide, editable, title, id }: CategoryRename) => 
 
     return (
         <form onSubmit={handelSubmit} className={style.renameForm}>
-            <input autoFocus type="text" defaultValue={title} onBlur={hide} name="newTitle" />
+            <input autoFocus type="text" defaultValue={title} onBlur={onHide} name="newTitle" />
             <button type="submit" />
         </form>
     )

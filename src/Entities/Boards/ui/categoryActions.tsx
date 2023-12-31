@@ -5,22 +5,22 @@ import { useAppDispatch } from '@/Shared/Lib/Hooks'
 import { boardsApi } from '../api/boards.api'
 
 type CategoryActions = {
-    hide: () => void
-    rename: () => void
+    onHide: () => void
+    onRename: () => void
     delete?: () => void
     id: string
 }
 
-export const CategoryActions = ({ hide, rename, id }: CategoryActions) => {
+export const CategoryActions = ({ onHide, onRename, id }: CategoryActions) => {
     const dispatch = useAppDispatch()
 
     const handelRename = () => {
-        hide()
-        rename()
+        onHide()
+        onRename()
     }
 
     const handelDelete = async () => {
-        hide()
+        onHide()
         await dispatch(boardsApi.endpoints.deleteCategory.initiate(id))
             .unwrap()
             .then(() => {
@@ -33,7 +33,7 @@ export const CategoryActions = ({ hide, rename, id }: CategoryActions) => {
 
     return (
         <>
-            <div className={style.closeActions} onClick={hide} />
+            <div className={style.closeActions} onClick={onHide} />
 
             <div className={style.categoryActions}>
                 <button className={style.actionItem} onClick={handelRename}>

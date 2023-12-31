@@ -87,7 +87,7 @@ export const CreateTask = ({ close }: { close: () => void }) => {
                     <div className={style.param}>
                         <span>Description</span>
                         <textarea
-                            className={style.input}
+                            className={[style.input, style.textarea].join(' ')}
                             rows={5}
                             maxLength={150}
                             name="description"
