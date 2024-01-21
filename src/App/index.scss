@@ -14,9 +14,12 @@
     --card-card-2: #f3f4f6;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #f3f4f6;
-    box-sizing: content-box;
 }
 
 .container {

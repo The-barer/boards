@@ -10,6 +10,7 @@ export const TaskSmall = (props: ITask) => {
 
     return (
         <div
+            key={props.id}
             className={[style.taskItem].join(' ')}
             onClick={() => {
                 navigate(`/task/${props.id}`)

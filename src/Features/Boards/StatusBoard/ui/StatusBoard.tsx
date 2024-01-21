@@ -19,7 +19,7 @@ export const StatusBoard = ({ tasks, status }: StatusBoard) => {
                 </div>
                 <AddTask />
             </header>
-            <TaskList arr={filtred} />
+            <TaskList arr={filtred} status={status} />
         </div>
     )
 }
