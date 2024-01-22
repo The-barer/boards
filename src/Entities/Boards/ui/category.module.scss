@@ -7,7 +7,7 @@
     line-height: 1.25rem;
     letter-spacing: 0.00625rem;
     display: flex;
-    width: 6.09375rem;
+
     align-items: center;
     gap: 0.125rem;
 }
@@ -60,6 +60,7 @@
 }
 
 .categoryActions {
+    @include title();
     display: flex;
     position: absolute;
     z-index: 99;
