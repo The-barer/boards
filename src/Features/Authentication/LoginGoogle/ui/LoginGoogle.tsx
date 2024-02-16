@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { settings } from '../model/settings'
 import { loginGoogleThunk } from '../model/login'
 import Logo from '../assets/google-icon-logo.svg?react'
-import style from './LoginGoogle.module.scss'
+import style from '@/Shared/UI/inputs/button.module.scss'
 
 export const LoginGoogle = ({ onSuccess }: { onSuccess: () => void }) => {
     const [searchParams, setSearchParams] = useState<URLSearchParams>()

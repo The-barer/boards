@@ -6,7 +6,10 @@ $neutral-16: #23262f;
     height: 48px;
     border-radius: 100px;
     padding: 10px 24px 10px 16px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     font-family: 'Manrope', sans-serif;
     font-size: 14px;
     font-weight: 600;

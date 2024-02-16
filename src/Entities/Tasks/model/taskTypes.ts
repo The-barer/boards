@@ -35,9 +35,9 @@ export interface ITaskChangeResponse {
 }
 
 export const enum TaskStatus {
-    BACKLOG = 'backlog',
-    TODO = 'todo',
-    INPROGRESS = 'inprogress',
-    REVIEW = 'review',
-    DONE = 'done',
+    BACKLOG = 'BACKLOG',
+    TODO = 'TODO',
+    INPROGRESS = 'INPROGRESS',
+    REVIEW = 'REVIEW',
+    DONE = 'DONE',
 }
