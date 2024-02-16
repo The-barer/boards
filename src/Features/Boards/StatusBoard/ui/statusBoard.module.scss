@@ -36,19 +36,19 @@
             background: #dce0ec;
             padding: 0.375rem 1rem;
             color: var(--text-text-primary, #16181d);
-            &.todo {
+            &.TODO {
                 background: rgba(245, 223, 165, 1);
             }
-            &.inprogress {
+            &.INPROGRESS {
                 background: rgba(228, 204, 243, 1);
             }
-            &.done {
+            &.DONE {
                 background: rgba(213, 246, 213, 1);
             }
-            &.backlog {
+            &.BACKLOG {
                 background: rgba(220, 224, 236, 1);
             }
-            &.review {
+            &.REVIEW {
                 background: rgba(206, 225, 253, 1);
             }
         }

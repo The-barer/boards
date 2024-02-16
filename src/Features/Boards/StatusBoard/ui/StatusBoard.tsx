@@ -10,6 +10,7 @@ type StatusBoard = {
 export const StatusBoard = ({ tasks, status }: StatusBoard) => {
     const filtred = tasks.filter((task) => task.status === status)
     const tasksCount = filtred.length
+
     return (
         <div className={style.statusBoard}>
             <header className={style.boardHeader}>
