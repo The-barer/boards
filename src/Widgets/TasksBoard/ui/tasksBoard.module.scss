@@ -1,0 +1,29 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0.5rem;
+}
+
+.taskBoard {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 1fr);
+    column-gap: 2rem;
+    overflow-x: auto;
+}
+
+.boardHeader {
+    display: flex;
+    justify-content: space-between;
+
+    .boardTitle {
+        color: #000;
+
+        font-family: Manrope;
+        font-size: 1.75rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 2.25rem;
+    }
+}

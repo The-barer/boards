@@ -1,0 +1,23 @@
+.categoryListContainer {
+    display: grid;
+    grid-template-rows: 48px 1fr;
+    overflow-y: auto;
+
+    .entities {
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
+        padding: 5px;
+    }
+}
+
+.title {
+    color: #000;
+
+    font-family: Manrope;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 150% */
+    letter-spacing: 0.03125rem;
+}
