@@ -53,6 +53,14 @@ export const sessionSlice = createSlice({
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
+            .addMatcher(
+                sessionApi.endpoints.loginGoogle.matchFulfilled,
+                (state, { payload }: PayloadAction<IUserAuthData>) => {
+                    state.isAuthorized = true
+                    state.accessToken = payload.accessToken
+                    setAccessTokenToLocalStorage(payload.accessToken)
+                },
+            )
             .addMatcher(sessionApi.endpoints.logout.matchFulfilled, (state) => {
                 state.accessToken = null
                 state.isAuthorized = false
@@ -72,6 +80,24 @@ export const sessionSlice = createSlice({
                 state.loading = true
             })
             .addMatcher(sessionApi.endpoints.refreshToken.matchRejected, (state) => {
+                state.isAuthorized = false
+                state.accessToken = null
+                state.loading = false
+                removeTokenFromLocalStorage()
+            })
+            .addMatcher(sessionApi.endpoints.login.matchRejected, (state) => {
+                state.isAuthorized = false
+                state.accessToken = null
+                state.loading = false
+                removeTokenFromLocalStorage()
+            })
+            .addMatcher(sessionApi.endpoints.loginGoogle.matchRejected, (state) => {
+                state.isAuthorized = false
+                state.accessToken = null
+                state.loading = false
+                removeTokenFromLocalStorage()
+            })
+            .addMatcher(sessionApi.endpoints.loginVK.matchRejected, (state) => {
                 state.isAuthorized = false
                 state.accessToken = null
                 state.loading = false
