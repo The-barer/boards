@@ -1,62 +1,32 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 
 type DraggList<T> = {
     arr: T[]
     renderElement: (props: T) => ReactNode
-    updateFn: (item: T, newOrder: number) => void
+    dragHandlers: {
+        onDragStart: (e: React.DragEvent<HTMLDivElement>, item: T, i: number) => void
+        onDrop: (e: React.DragEvent<HTMLDivElement>, item: T, i: number) => void
+        onDragEnd?: (e: React.DragEvent<HTMLDivElement>, item: T, i: number) => void
+    }
+    // updateFn: (item: T, newOrder: number) => void
 }
 
-export const DraggableList = <P,>({ arr = [], updateFn, renderElement }: DraggList<P>) => {
-    const [dragged, setDragged] = useState<number | null>(null)
-
-    const sortedArr = Array.from(arr)
-
-    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, i: number) => {
-        e.stopPropagation()
-
-        setDragged(i)
-    }
-
-    const dragDropHandler = (e: React.DragEvent<HTMLDivElement>, current: number) => {
-        e.preventDefault()
-        if (dragged !== null && dragged !== current) {
-            const temp = sortedArr.splice(dragged, 1)[0]
-
-            sortedArr.splice(current, 0, temp)
-
-            sortedArr.forEach((item, index) => updateFn(item, index))
-        }
-
-        setDragged(null)
-    }
-
-    const dragEndHandler = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-    }
-
-    const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-    }
-
+export const DraggableList = <P,>({ arr = [], renderElement, dragHandlers }: DraggList<P>) => {
     return (
         <>
-            {sortedArr.map((item, i) => {
+            {arr.map((item, i) => {
                 return (
                     <div
-                        onDragStart={(e) => {
-                            dragStartHandler(e, i)
-                        }}
-                        onDragEnd={(e) => {
-                            dragEndHandler(e)
-                        }}
-                        onDragOver={(e) => {
-                            dragOverHandler(e)
-                        }}
-                        onDrop={(e) => {
-                            dragDropHandler(e, i)
-                        }}
                         draggable
                         key={i}
+                        onDragStart={(e) => dragHandlers.onDragStart(e, item, i)}
+                        onDrop={(e) => dragHandlers.onDrop(e, item, i)}
+                        onDragEnd={(e) =>
+                            dragHandlers.onDragEnd && dragHandlers.onDragEnd(e, item, i)
+                        }
+                        onDragOver={(e) => {
+                            e.preventDefault()
+                        }}
                     >
                         {renderElement(item)}
                     </div>

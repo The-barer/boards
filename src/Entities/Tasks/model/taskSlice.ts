@@ -30,6 +30,12 @@ export const tasksSlice = createSlice({
             state.detailed = null
             state.notEmpty = false
         },
+        setDetailedTask: (state, { payload }: PayloadAction<ITask>) => {
+            state.detailed = payload
+        },
+        clearDetailedTask: (state) => {
+            state.detailed = null
+        },
     },
     extraReducers(builder) {
         builder
@@ -61,10 +67,10 @@ export const tasksSlice = createSlice({
     },
 })
 
-export const { clearTasks } = tasksSlice.actions
+export const { clearTasks, setDetailedTask, clearDetailedTask } = tasksSlice.actions
 
 export const selectTasks = (state: RootState) => state.tasks.list
-export const selectTasksDetails = (state: RootState) => state.tasks.detailed
+export const selectTasksDetailed = (state: RootState) => state.tasks.detailed
 export const selectTasksNotEmpty = (state: RootState) => state.tasks.notEmpty
 export const selectTasksStatuses = (state: RootState) => state.tasks.defaultStatuses
 
