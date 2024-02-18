@@ -1,4 +1,11 @@
-export { tasksSlice, selectTasks, selectTasksStatuses } from './model/taskSlice'
+export {
+    tasksSlice,
+    selectTasks,
+    selectTasksStatuses,
+    selectTasksDetailed,
+    setDetailedTask,
+    clearDetailedTask,
+} from './model/taskSlice'
 export { TaskSmall } from './ui/TaskSmall'
 export { TaskList } from './ui/TaskList'
 export { taskApi } from './api/task.api'

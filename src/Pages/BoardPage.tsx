@@ -8,7 +8,7 @@ export const BoardPage = () => {
     const { boardId } = useParams()
     if (boardId) {
         return (
-            <div style={{ overflow: 'auto' }}>
+            <div style={{ overflow: 'auto', margin: '0 auto' }}>
                 <BoardSwitch boardID={boardId} />
                 <TasksBoard boardId={boardId} />
             </div>
