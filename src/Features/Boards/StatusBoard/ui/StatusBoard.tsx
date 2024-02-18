@@ -5,9 +5,10 @@ import style from './statusBoard.module.scss'
 type StatusBoard = {
     tasks: ITask[]
     status: TaskStatus
+    boardId?: string
 }
 
-export const StatusBoard = ({ tasks, status }: StatusBoard) => {
+export const StatusBoard = ({ tasks, status, boardId }: StatusBoard) => {
     const filtred = tasks.filter((task) => task.status === status)
     const tasksCount = filtred.length
     return (
@@ -17,7 +18,7 @@ export const StatusBoard = ({ tasks, status }: StatusBoard) => {
                     <div className={[style.filterChip, style[status]].join(' ')}>{status}</div>
                     <div className={style.tasksCounter}>{tasksCount}</div>
                 </div>
-                <AddTask />
+                <AddTask boardId={boardId} status={status} />
             </header>
             <TaskList arr={filtred} />
         </div>

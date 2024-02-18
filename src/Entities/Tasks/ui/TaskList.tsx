@@ -20,13 +20,11 @@ export const TaskList = ({ arr }: { arr: ITask[] }) => {
 
     return (
         <div className={style.taskList}>
-            {arr.length !== 0 && (
-                <DraggableList
-                    arr={arr}
-                    updateFn={updateTaskOrder}
-                    renderElement={(props) => <TaskSmall {...props} key={props.id} />}
-                />
-            )}
+            <DraggableList
+                arr={arr}
+                updateFn={updateTaskOrder}
+                renderElement={(props) => <TaskSmall {...props} key={props.id} />}
+            />
         </div>
     )
 }

@@ -5,18 +5,24 @@ import { boardsList } from '@/Entities/Boards'
 
 import style from './createTask.module.scss'
 import btnStyle from '@/Shared/UI/inputs/button.module.scss'
-import { ITaskCreateDTO, taskApi } from '@/Entities/Tasks'
+import { ITaskCreateDTO, TaskStatus, taskApi } from '@/Entities/Tasks'
 
-export type CreateTask = {
+export type NewTask = {
     title: HTMLInputElement
-    description?: HTMLInputElement
-    status?: HTMLSelectElement
+    description: HTMLInputElement
+    status: HTMLSelectElement
     dueDate?: HTMLInputElement
     priorityOrder?: number
     boardId: HTMLSelectElement
 }
 
-export const CreateTask = ({ close }: { close: () => void }) => {
+type CreateTask = {
+    onSuccess: () => void
+    status?: TaskStatus
+    boardId?: string
+}
+
+export const CreateTask = ({ onSuccess, boardId, status }: CreateTask) => {
     const statuses = useAppSelector(selectTasksStatuses)
     const boards = useAppSelector(boardsList)
 
@@ -24,32 +30,31 @@ export const CreateTask = ({ close }: { close: () => void }) => {
 
     const onCreate = async (task: ITaskCreateDTO) => {
         try {
-            console.log(task)
             await dispatch(taskApi.endpoints.createTask.initiate(task)).unwrap()
-            return close()
+            onSuccess()
         } catch (e) {
             console.log(e)
         }
     }
 
-    const handelSubmit = (e: React.FormEvent<HTMLFormElement & CreateTask>) => {
+    const handelSubmit = (e: React.FormEvent<HTMLFormElement & NewTask>) => {
         e.preventDefault()
         e.stopPropagation()
         const { title, boardId, dueDate, description, status } = e.currentTarget
 
         const newTask: ITaskCreateDTO = {
-            boardId: boardId?.value,
+            boardId: boardId.value,
             title: title.value,
             dueDate: dueDate?.value ? Date.parse(dueDate?.value) : null,
             description: description?.value,
-            status: status?.value,
+            status: status.value,
         }
 
         onCreate({ ...newTask })
     }
 
     const handelReset = () => {
-        close()
+        onSuccess()
     }
 
     return (
@@ -64,7 +69,12 @@ export const CreateTask = ({ close }: { close: () => void }) => {
                     </div>
                     <div className={style.param}>
                         <span>Board</span>
-                        <select className={style.input} name="boardId" required>
+                        <select
+                            className={style.input}
+                            name="boardId"
+                            defaultValue={boardId}
+                            required
+                        >
                             {boards.map((board) => (
                                 <option key={board.id} value={board.id}>
                                     {board.title}
@@ -78,7 +88,7 @@ export const CreateTask = ({ close }: { close: () => void }) => {
                     </div>
                     <div className={style.param}>
                         <span>Status</span>
-                        <select className={style.input} name="status">
+                        <select className={style.input} name="status" defaultValue={status}>
                             {statuses.map((status) => (
                                 <option key={status}>{status}</option>
                             ))}
@@ -91,6 +101,7 @@ export const CreateTask = ({ close }: { close: () => void }) => {
                             rows={5}
                             maxLength={150}
                             name="description"
+                            required
                         />
                     </div>
 
