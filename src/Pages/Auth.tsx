@@ -1,6 +1,6 @@
 import { Login } from '@/Widgets/Login/ui/Login'
 
-export default function Auth() {
+export function Auth() {
     return (
         <div className="container">
             <Login />

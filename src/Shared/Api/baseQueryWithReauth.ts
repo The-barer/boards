@@ -1,12 +1,12 @@
 import { type FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
 import { type FetchArgs, type FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { type BaseQueryApi, type QueryReturnValue } from '@reduxjs/toolkit/src/query/baseQueryTypes'
-import { baseQuery } from './baseQuery'
-import { invalidateAccessToken } from './invalidateTokenEvent'
 import { Mutex } from 'async-mutex'
 
-const mutex = new Mutex()
+import { baseQuery } from './baseQuery'
+import { invalidateAccessToken } from './invalidateTokenEvent'
 
+const mutex = new Mutex()
 const AUTH_ERROR_CODES = new Set([401])
 
 export async function baseQueryWithReauth(
@@ -14,9 +14,12 @@ export async function baseQueryWithReauth(
     api: BaseQueryApi,
     extraOptions: object,
 ): Promise<QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>> {
+    // TODO на сколько ты хорошо понял как работать с этой либой
+    // TODO если не сильно я бы убрал ее
     await mutex.waitForUnlock()
 
-    const release = await mutex.acquire()
+    // TODO так у них же есть своя функция для release
+    // const release = await mutex.acquire()
 
     try {
         const result = await baseQuery(args, api, extraOptions)
@@ -28,6 +31,8 @@ export async function baseQueryWithReauth(
 
         return result
     } finally {
-        release()
+        // TODO так у них же есть своя функция для release
+        // release()
+        mutex.release()
     }
 }

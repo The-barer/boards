@@ -14,4 +14,5 @@ export const config = {
     APP_HOST,
     API_ENDPOINT,
     AUTH_REDIRECT_URL,
-} as const
+} as const // TODO as const? что это? напиши уже тип для конфига тогда
+// TODO https://vitejs.dev/guide/env-and-mode#intellisense-for-typescript типо для vite env

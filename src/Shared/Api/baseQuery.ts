@@ -22,7 +22,12 @@ export const baseQuery: BaseQueryFn<
     prepareHeaders: (headers) => {
         const accessToken = getAccessToken()
 
-        !!accessToken && headers.set('Authorization', `Bearer ${accessToken}`)
+        if (accessToken) {
+            headers.set('Authorization', `Bearer ${accessToken}`)
+        }
+
+        // TODO так лучше не надо
+        // !!accessToken && headers.set('Authorization', `Bearer ${accessToken}`)
 
         return headers
     },

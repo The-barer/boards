@@ -22,12 +22,7 @@ export const BoardItem = (props: IBoard) => {
         >
             <CategoryTitle onHide={() => setEditTitle(false)} {...props} editable={editTitle} />
 
-            <button
-                className={style.openActions}
-                onClick={() => {
-                    setShowActions(!showActions)
-                }}
-            >
+            <button className={style.openActions} onClick={() => setShowActions(!showActions)}>
                 <img src={actionIcon} alt="Category actions" />
             </button>
             {showActions && (
