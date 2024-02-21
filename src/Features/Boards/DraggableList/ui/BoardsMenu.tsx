@@ -19,11 +19,11 @@ export const BoardsMenu = () => {
         onDragStart: (e: React.DragEvent<HTMLDivElement>, item: IBoard, i: number) => {
             e.stopPropagation()
             setDragElement(i)
-            console.log('start')
+            console.log('start', item)
         },
         onDrop: (e: React.DragEvent<HTMLDivElement>, item: IBoard, i: number) => {
             e.preventDefault()
-            console.log('drop')
+            console.log('drop', item)
             if (dragElement !== null && dragElement !== i) {
                 const temp = sortedArr.splice(dragElement, 1)[0]
                 sortedArr.splice(i, 0, temp)
@@ -52,7 +52,7 @@ export const BoardsMenu = () => {
             <div className={style.entities}>
                 <DraggableList
                     arr={sortedArr}
-                    renderElement={(props) => <BoardItem {...props} key={props.id} />}
+                    renderElement={(props: IBoard) => <BoardItem {...props} key={props.id} />}
                     dragHandlers={dragHandlers}
                 />
                 <AddBoardBtn />

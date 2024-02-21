@@ -1,5 +1,7 @@
-import { config } from '@/Shared/Api'
+import { config } from '@/Shared/Config'
 import { IAuthConfig } from '../types/types'
+
+// https://developers.google.com/identity/protocols/oauth2/native-app?hl=ru
 
 export const settings: IAuthConfig = {
     baseUrl: 'https://accounts.google.com/o/oauth2/v2/auth',

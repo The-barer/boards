@@ -1,5 +1,8 @@
-import { config } from '@/Shared/Api'
+import { config } from '@/Shared/Config'
+
 import { IAuthConfig } from '../types/types'
+
+// https://vk.com/dev/authcode_flow_user
 
 export const settings: IAuthConfig = {
     baseUrl: 'https://oauth.vk.com/authorize',
