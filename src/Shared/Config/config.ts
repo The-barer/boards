@@ -9,12 +9,10 @@ const API_ENDPOINT = APP_DEV_MODE
 const AUTH_REDIRECT_URL = `${APP_HOST}/auth/callback`
 
 type BoardsConfig = {
-    APP_HOST: string,
-    API_ENDPOINT: string,
-    AUTH_REDIRECT_URL: string,
+    APP_HOST: string
+    API_ENDPOINT: string
+    AUTH_REDIRECT_URL: string
 }
-
-
 
 export const config = {
     APP_HOST,

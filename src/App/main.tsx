@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App.tsx'
+
 import { Provider } from 'react-redux'
 import { store } from './appStore.ts'
 
-// TODO не знаю как по FSA я бы вынес этот файла в отдельную папку styles
-import './index.scss'
+import '@UI/Styles/appStyle.scss'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

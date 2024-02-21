@@ -1,11 +1,8 @@
-// TODO отделя импорты библеотек и файлов из проекта
 import { createBrowserRouter } from 'react-router-dom'
 
-
-// TODO старайся использовать одну нотацию, у тебя часть была как deafault часть просто шло как конст
 import { Layout } from '@/Pages/Layout'
 import { HomePage } from '@/Pages/Home'
-import { Auth }  from '@/Pages/Auth'
+import { Auth } from '@/Pages/Auth'
 import { ErrorPage } from '@/Pages/ErrorPage'
 import { Secret } from '@/Pages/Secret'
 import { ProtectedRoute } from '@/Features/Authentication/ProtectedRoute'

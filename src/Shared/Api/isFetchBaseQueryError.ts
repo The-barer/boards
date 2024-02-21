@@ -9,7 +9,8 @@ export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryEr
     return typeof error === 'object' && error != null && 'status' in error
 }
 
-// TODO выглядит как костыль
+// https://redux-toolkit.js.org/rtk-query/usage-with-typescript
+
 export function isServerError(error: unknown): error is ServerError {
     return (
         typeof error === 'object' &&

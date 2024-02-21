@@ -26,9 +26,6 @@ export const baseQuery: BaseQueryFn<
             headers.set('Authorization', `Bearer ${accessToken}`)
         }
 
-        // TODO так лучше не надо
-        // !!accessToken && headers.set('Authorization', `Bearer ${accessToken}`)
-
         return headers
     },
 })
