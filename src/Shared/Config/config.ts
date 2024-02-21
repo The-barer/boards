@@ -8,10 +8,16 @@ const API_ENDPOINT = APP_DEV_MODE
 
 const AUTH_REDIRECT_URL = `${APP_HOST}/auth/callback`
 
-console.log(API_ENDPOINT, APP_DEV_MODE)
+type BoardsConfig = {
+    APP_HOST: string,
+    API_ENDPOINT: string,
+    AUTH_REDIRECT_URL: string,
+}
+
+
 
 export const config = {
     APP_HOST,
     API_ENDPOINT,
     AUTH_REDIRECT_URL,
-} as const
+} as BoardsConfig
