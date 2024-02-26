@@ -1,19 +1,12 @@
 import { DraggableList } from '@/Shared/UI'
 import { useAppDispatch, useAppSelector } from '@/Shared/Lib/Hooks'
-import {
-    ITask,
-    TaskSmall,
-    clearDetailedTask,
-    selectTasksDetailed,
-    setDetailedTask,
-    taskApi,
-} from '..'
+import { ITask, TaskSmall, clearDraggedTask, selectTaskDragged, setDraggedTask, taskApi } from '..'
 
 import style from './task.module.scss'
 
 export const TaskList = ({ arr, status }: { arr: ITask[]; status: string }) => {
     const dispatch = useAppDispatch()
-    const dragged = useAppSelector(selectTasksDetailed)
+    const dragged = useAppSelector(selectTaskDragged)
     const updateTask = async (item: ITask, newOrder: number, newStatus: string) => {
         if (item.priorityOrder !== newOrder || item.status !== newStatus) {
             try {
@@ -33,7 +26,7 @@ export const TaskList = ({ arr, status }: { arr: ITask[]; status: string }) => {
     const dragHandlers = {
         onDragStart: (e: React.DragEvent<HTMLDivElement>, item: ITask) => {
             e.stopPropagation()
-            dispatch(setDetailedTask(item))
+            dispatch(setDraggedTask(item))
         },
         onDrop: (e: React.DragEvent<HTMLDivElement>, item: ITask, i: number) => {
             e.preventDefault()
@@ -45,7 +38,7 @@ export const TaskList = ({ arr, status }: { arr: ITask[]; status: string }) => {
         },
         onDragEnd: (e: React.DragEvent<HTMLDivElement>) => {
             e.preventDefault()
-            dispatch(clearDetailedTask())
+            dispatch(clearDraggedTask())
         },
     }
 

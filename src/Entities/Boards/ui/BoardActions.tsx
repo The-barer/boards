@@ -1,6 +1,6 @@
 import editIcon from '@/Shared/UI/assets/icons/edit-edit-pencil-line-02.svg'
 import delIcon from '@/Shared/UI/assets/icons/icons-delete-24-px.svg'
-import style from './category.module.scss'
+import style from './board.module.scss'
 import { useAppDispatch } from '@/Shared/Lib/Hooks'
 import { boardsApi } from '../api/boards.api'
 
@@ -11,7 +11,7 @@ type CategoryActions = {
     id: string
 }
 
-export const CategoryActions = ({ onHide, onRename, id }: CategoryActions) => {
+export const BoardActions = ({ onHide, onRename, id }: CategoryActions) => {
     const dispatch = useAppDispatch()
 
     const handelRename = () => {

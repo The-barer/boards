@@ -1,10 +1,13 @@
+import { useEffect, useRef, useState } from 'react'
+
 import { useAppDispatch, usePopupClose } from '@/Shared/Lib/Hooks'
 import { makeURL } from '@/Shared/Lib/Helpers'
-import { useEffect, useRef, useState } from 'react'
 import { settings } from '../model/settings'
 import { loginGoogleThunk } from '../model/login'
+
 import Logo from '../assets/google-icon-logo.svg?react'
-import style from '@/Shared/UI/inputs/button.module.scss'
+
+import style from './LoginGoogle.module.scss'
 
 export const LoginGoogle = ({ onSuccess }: { onSuccess: () => void }) => {
     const [searchParams, setSearchParams] = useState<URLSearchParams>()
@@ -37,7 +40,7 @@ export const LoginGoogle = ({ onSuccess }: { onSuccess: () => void }) => {
     }
 
     return (
-        <button onClick={handelSubmit} className={style.btn}>
+        <button onClick={handelSubmit} className={style.btnBlack}>
             <Logo />
             <div className="text">Continue with Google!</div>
         </button>

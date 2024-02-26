@@ -4,7 +4,7 @@ import { isFetchBaseQueryError, isServerError } from '@/Shared/Api'
 import { IUserCreateProfile, setUserData } from '@/Entities/User'
 
 export const signinThunk = createAsyncThunk<void, IUserCreateProfile, { state: RootState }>(
-    'session/login',
+    'session/Sigin',
     async (body: IUserCreateProfile, { dispatch }) => {
         try {
             const response = await dispatch(sessionApi.endpoints.signin.initiate(body)).unwrap()

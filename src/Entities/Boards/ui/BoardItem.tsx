@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import { IBoard } from '../model/boardsTypes'
-import style from './category.module.scss'
+import style from './board.module.scss'
 import actionIcon from '@/Shared/UI/assets/icons/menu-more-vertical.svg'
-import { CategoryActions } from './categoryActions'
+import { BoardActions } from './BoardActions'
 
-import { CategoryTitle } from './categoryTitle'
+import { BoardTitle } from './BoardTitle'
 import { useNavigate, useParams } from 'react-router-dom'
 
 export const BoardItem = (props: IBoard) => {
+    const navigate = useNavigate()
+
+    const { boardId } = useParams()
+
     const [showActions, setShowActions] = useState(false)
     const [editTitle, setEditTitle] = useState(false)
-    const navigate = useNavigate()
-    const { boardId } = useParams()
 
     return (
         <div
@@ -20,13 +22,13 @@ export const BoardItem = (props: IBoard) => {
                 navigate(`/board/${props.id}`)
             }}
         >
-            <CategoryTitle onHide={() => setEditTitle(false)} {...props} editable={editTitle} />
+            <BoardTitle onHide={() => setEditTitle(false)} {...props} editable={editTitle} />
 
             <button className={style.openActions} onClick={() => setShowActions(!showActions)}>
                 <img src={actionIcon} alt="Category actions" />
             </button>
             {showActions && (
-                <CategoryActions
+                <BoardActions
                     onHide={() => setShowActions(false)}
                     onRename={() => setEditTitle(!editTitle)}
                     {...props}

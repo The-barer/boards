@@ -1,6 +1,7 @@
 import { useAppDispatch } from '@/Shared/Lib/Hooks'
-import style from './category.module.scss'
 import { boardsApi } from '../api/boards.api'
+
+import style from './board.module.scss'
 
 type CategoryRename = {
     onHide: () => void
@@ -9,7 +10,7 @@ type CategoryRename = {
     id: string
 }
 
-export const CategoryTitle = ({ onHide, editable, title, id }: CategoryRename) => {
+export const BoardTitle = ({ onHide, editable, title, id }: CategoryRename) => {
     const dispatch = useAppDispatch()
 
     const handelSubmit = async (

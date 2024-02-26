@@ -1,9 +1,7 @@
-$color-vk: #0a68f5;
-
 .btn {
     display: flex;
     gap: 10px;
-    background-color: $color-vk;
+    background-color: var(--controls-btn-primary);
     width: 100%;
     height: 48px;
     border-radius: 100px;

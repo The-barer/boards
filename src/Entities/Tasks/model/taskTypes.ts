@@ -3,26 +3,28 @@ export interface ITask {
     title: string
     description: string
     status: string
-    dueDate: Date | null
+    dueDate: string | null
     priorityOrder: number
     createdAt: Date | string
     updatedAt: Date | string
     category?: {
-        id: string
-        title: string
-        priorityOrder: number
-        createdAt: string
-        updatedAt: string
+        id?: string
+        title?: string
+        priorityOrder?: number
+        createdAt?: string
+        updatedAt?: string
     }
 }
 
+export interface ITaskDetails extends Partial<ITask> {}
+
 export interface ITaskCreateDTO {
-    boardId: string
+    categoryId: string
 
     title: string
-    description?: string | undefined
+    description: string | undefined
     status?: string | undefined
-    dueDate?: number | null
+    dueDate?: string | undefined
     priorityOrder?: number | undefined
 }
 

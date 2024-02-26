@@ -12,11 +12,8 @@ export const loginVKThunk = createAsyncThunk<void, string, { state: RootState }>
             ).unwrap()
             dispatch(setUserData(response.user))
         } catch (error) {
-            if (isFetchBaseQueryError(error)) {
-                // TODO а зачем нам вложенный if?
-                if (isServerError(error.data)) {
-                    throw new Error(error.data.message.toString())
-                }
+            if (isFetchBaseQueryError(error) && isServerError(error.data)) {
+                throw new Error(error.data.message.toString())
             }
 
             throw new Error('Unknown error')

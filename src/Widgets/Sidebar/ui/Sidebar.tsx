@@ -1,7 +1,8 @@
 import { UserCardSmall } from '@/Entities/User'
-import style from './sidebar.module.scss'
 import { LogoutBtn } from '@/Features/Authentication/Logout'
 import { BoardsMenu } from '@/Features/Boards/DraggableList'
+
+import style from './sidebar.module.scss'
 
 export const Sidebar = () => {
     return (

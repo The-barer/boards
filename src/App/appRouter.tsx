@@ -41,6 +41,14 @@ export const router = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            {
+                path: '/task/:taskId',
+                element: (
+                    <ProtectedRoute>
+                        <BoardPage />
+                    </ProtectedRoute>
+                ),
+            },
         ],
     },
     {

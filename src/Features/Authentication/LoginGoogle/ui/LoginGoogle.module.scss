@@ -1,23 +1,19 @@
-$color-vk: #0a68f5;
-
-.btn {
-    display: flex;
-    gap: 10px;
-    background-color: $color-vk;
+.btnBlack {
+    background-color: var(--controls-btn-black);
     width: 100%;
     height: 48px;
     border-radius: 100px;
-    border: none;
     padding: 10px 24px 10px 16px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     font-family: 'Manrope', sans-serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
     letter-spacing: 0.10000000149011612px;
     text-align: center;
-
     color: #ffffff;
     &:hover {
         cursor: pointer;

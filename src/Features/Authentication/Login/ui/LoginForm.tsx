@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
+
 import { InputWithMsg } from '@/Shared/UI/inputs/InputWithMsg'
+import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { ShowPassword } from '@/Shared/UI/inputs/features/ShowPassword'
 import { useInput } from '@/Shared/Lib/Hooks/useInput'
-import { Button } from '@/Shared/UI/inputs/button'
 import { loginThunk } from '..'
 import { LoginParams } from '../model/login'
+
 import style from './LoginForm.module.scss'
 
 type LoginFormFields = {
@@ -58,7 +59,9 @@ export function LoginForm({ onSuccess }: Props) {
                 <ShowPassword setType={setNewType} />
             </InputWithMsg>
 
-            <Button>Login</Button>
+            <button type="submit" className={style.btnBlack}>
+                Login
+            </button>
         </form>
     )
 }
