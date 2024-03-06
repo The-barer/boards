@@ -4,8 +4,8 @@ import { ITask, ITaskChangeResponse, ITaskCreateDTO, ITaskUpdateDTO } from '../m
 export const taskApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         createTask: build.mutation<ITask, ITaskCreateDTO>({
-            query: ({ boardId, ...body }) => ({
-                url: `/task/category/${boardId}`,
+            query: ({ categoryId, ...body }) => ({
+                url: `/task/category/${categoryId}`,
                 method: 'POST',
                 body,
             }),
@@ -34,7 +34,7 @@ export const taskApi = baseApi.injectEndpoints({
                 url: `/task/${id}`,
                 method: 'GET',
             }),
-            providesTags: [TASK_TAG],
+            // providesTags: [TASK_TAG],
         }),
 
         getAllTasks: build.query<ITask[], string>({

@@ -1,3 +1,6 @@
+import { config } from '../Config/config'
+import { getAccessToken } from '../Lib/Helpers/getAccessToken'
+
 import {
     BaseQueryFn,
     FetchArgs,
@@ -5,9 +8,6 @@ import {
     FetchBaseQueryMeta,
     fetchBaseQuery,
 } from '@reduxjs/toolkit/dist/query/react'
-import { config } from './config'
-
-import { getAccessToken } from '../Lib/Helpers/getAccessToken'
 
 export const baseQuery: BaseQueryFn<
     string | FetchArgs,
@@ -22,7 +22,9 @@ export const baseQuery: BaseQueryFn<
     prepareHeaders: (headers) => {
         const accessToken = getAccessToken()
 
-        !!accessToken && headers.set('Authorization', `Bearer ${accessToken}`)
+        if (accessToken) {
+            headers.set('Authorization', `Bearer ${accessToken}`)
+        }
 
         return headers
     },

@@ -1,6 +1,7 @@
 import { RouterProvider } from 'react-router-dom'
-import { router } from './appRouter'
 import 'normalize.css'
+
+import { router } from './appRouter'
 
 function App() {
     return <RouterProvider router={router} />

@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { Layout } from '../Pages/Layout'
-import HomePage from '../Pages/Home'
-import Auth from '../Pages/Auth'
-import { ErrorPage } from '../Pages/ErrorPage'
-import { Secret } from '../Pages/Secret'
+
+import { Layout } from '@/Pages/Layout'
+import { HomePage } from '@/Pages/Home'
+import { Auth } from '@/Pages/Auth'
+import { ErrorPage } from '@/Pages/ErrorPage'
+import { Secret } from '@/Pages/Secret'
 import { ProtectedRoute } from '@/Features/Authentication/ProtectedRoute'
-import { Callback } from '../Pages/Callback'
-import PersonalInfo from '../Pages/PersonalInfo'
+import { Callback } from '@/Pages/Callback'
+import { PersonalInfo } from '@/Pages/PersonalInfo'
 import { BoardPage } from '@/Pages/BoardPage'
 
 export const router = createBrowserRouter([
@@ -34,6 +35,14 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/board/:boardId',
+                element: (
+                    <ProtectedRoute>
+                        <BoardPage />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/task/:taskId',
                 element: (
                     <ProtectedRoute>
                         <BoardPage />

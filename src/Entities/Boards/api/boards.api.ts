@@ -42,7 +42,6 @@ export const boardsApi = baseApi.injectEndpoints({
                 url: `/category/${id}`,
                 method: 'GET',
             }),
-            providesTags: [CATEGORIES_TAG],
         }),
 
         getAllCategories: build.query<IBoard[], void>({
@@ -51,6 +50,8 @@ export const boardsApi = baseApi.injectEndpoints({
                 method: 'GET',
             }),
             providesTags: [CATEGORIES_TAG],
+            transformResponse: (arr: IBoard[]) =>
+                arr.sort((a, b) => a.priorityOrder - b.priorityOrder),
         }),
     }),
 })

@@ -19,7 +19,7 @@ export const StatusBoard = ({ tasks, status, boardId }: StatusBoard) => {
                     <div className={[style.filterChip, style[status]].join(' ')}>{status}</div>
                     <div className={style.tasksCounter}>{tasksCount}</div>
                 </div>
-                <AddTask boardId={boardId} status={status} />
+                <AddTask task={{ status, category: { id: boardId } }} />
             </header>
             <TaskList arr={filtred} status={status} />
         </div>

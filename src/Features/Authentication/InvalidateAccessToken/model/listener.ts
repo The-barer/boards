@@ -3,6 +3,7 @@ import { invalidateAccessToken } from '@/Shared/Api/invalidateTokenEvent'
 import { getAccessToken } from '@/Shared/Lib/Helpers/getAccessToken'
 import { sessionApi } from '@/Entities/Session/'
 import { logoutThunk } from '../../Logout'
+import { setAccessTokenToLocalStorage } from '@/Shared/Lib/Helpers/localStorage.helper'
 
 export const invalidateAccessTokenListener = createListenerMiddleware()
 
@@ -14,12 +15,13 @@ export const startInvalidateAccessTokenListener =
 startInvalidateAccessTokenListener({
     actionCreator: invalidateAccessToken,
     effect: async (_, api) => {
-        let token = getAccessToken()
+        const session = api.getState().session
 
-        if (token) {
-            return
+        if (session.isAuthorized && session.accessToken) {
+            setAccessTokenToLocalStorage(session.accessToken)
         }
 
+        let token = getAccessToken()
         const refresh = document.cookie.indexOf('refreshToken')
 
         if (!token && refresh === 0) {

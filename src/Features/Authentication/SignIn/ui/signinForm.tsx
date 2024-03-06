@@ -3,7 +3,6 @@ import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { InputWithMsg } from '@/Shared/UI/inputs/InputWithMsg'
 import { ShowPassword } from '@/Shared/UI/inputs/features/ShowPassword'
 import { useInput } from '@/Shared/Lib/Hooks/useInput'
-import { Button } from '@/Shared/UI/inputs/button'
 
 import style from './signinForm.module.scss'
 import { IUserCreateProfile } from '@/Entities/User'
@@ -70,7 +69,7 @@ export function SigninForm({ onSuccess }: Props) {
             <InputWithMsg {...username} />
             <InputWithMsg {...photo} />
 
-            <Button>Registration</Button>
+            <button type="submit">Registration</button>
         </form>
     )
 }

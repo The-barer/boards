@@ -1,12 +1,13 @@
 import { type FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
 import { type FetchArgs, type FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { type BaseQueryApi, type QueryReturnValue } from '@reduxjs/toolkit/src/query/baseQueryTypes'
-import { baseQuery } from './baseQuery'
-import { invalidateAccessToken } from './invalidateTokenEvent'
 import { Mutex } from 'async-mutex'
 
-const mutex = new Mutex()
+import { baseQuery } from './baseQuery'
+import { invalidateAccessToken } from './invalidateTokenEvent'
+import { wait } from '../Lib/Helpers'
 
+const mutex = new Mutex()
 const AUTH_ERROR_CODES = new Set([401])
 
 export async function baseQueryWithReauth(
@@ -16,18 +17,26 @@ export async function baseQueryWithReauth(
 ): Promise<QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>> {
     await mutex.waitForUnlock()
 
-    const release = await mutex.acquire()
+    let result = await baseQuery(args, api, extraOptions)
 
-    try {
-        const result = await baseQuery(args, api, extraOptions)
+    if (typeof result.error?.status === 'number' && AUTH_ERROR_CODES.has(result.error.status)) {
+        if (!mutex.isLocked()) {
+            const release = await mutex.acquire()
 
-        if (typeof result.error?.status === 'number' && AUTH_ERROR_CODES.has(result.error.status)) {
-            api.dispatch(invalidateAccessToken())
-            //тут надо дождаться отработки события. как понять?
+            try {
+                api.dispatch(invalidateAccessToken())
+
+                await wait(10)
+
+                result = await baseQuery(args, api, extraOptions)
+            } finally {
+                release()
+            }
+        } else {
+            await mutex.waitForUnlock()
+            result = await baseQuery(args, api, extraOptions)
         }
-
-        return result
-    } finally {
-        release()
     }
+
+    return result
 }

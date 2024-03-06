@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { ITask, TaskStatus } from './taskTypes.ts'
+import { ITask, ITaskDetails, TaskStatus } from './taskTypes.ts'
 import { taskApi } from '../api/task.api.ts'
 
 const initialState: {
     list: ITask[] | []
-    detailed: ITask | null
-    notEmpty: boolean
+    dragged: ITask | null
+    detailed: ITaskDetails | null
     defaultStatuses: TaskStatus[]
 } = {
     list: [],
+    dragged: null,
     detailed: null,
-    notEmpty: false,
     defaultStatuses: [
         TaskStatus.BACKLOG,
         TaskStatus.TODO,
@@ -28,9 +28,14 @@ export const tasksSlice = createSlice({
         clearTasks: (state) => {
             state.list = []
             state.detailed = null
-            state.notEmpty = false
         },
-        setDetailedTask: (state, { payload }: PayloadAction<ITask>) => {
+        setDraggedTask: (state, { payload }: PayloadAction<ITask>) => {
+            state.dragged = payload
+        },
+        clearDraggedTask: (state) => {
+            state.dragged = null
+        },
+        setDetailedTask: (state, { payload }: PayloadAction<ITaskDetails>) => {
             state.detailed = payload
         },
         clearDetailedTask: (state) => {
@@ -43,35 +48,32 @@ export const tasksSlice = createSlice({
                 taskApi.endpoints.createTask.matchFulfilled,
                 (state, { payload }: PayloadAction<ITask>) => {
                     state.detailed = payload
-                    state.notEmpty = true
                 },
             )
             .addMatcher(
                 taskApi.endpoints.getTask.matchFulfilled,
                 (state, { payload }: PayloadAction<ITask>) => {
                     state.detailed = payload
-                    state.notEmpty = true
                 },
             )
             .addMatcher(
                 taskApi.endpoints.getAllTasks.matchFulfilled,
                 (state, { payload }: PayloadAction<ITask[]>) => {
                     state.list = payload
-                    state.notEmpty = true
                 },
             )
             .addMatcher(taskApi.endpoints.getAllTasks.matchRejected, (state) => {
                 state.list = []
-                state.notEmpty = false
             })
     },
 })
 
-export const { clearTasks, setDetailedTask, clearDetailedTask } = tasksSlice.actions
+export const { clearTasks, setDetailedTask, clearDetailedTask, clearDraggedTask, setDraggedTask } =
+    tasksSlice.actions
 
 export const selectTasks = (state: RootState) => state.tasks.list
-export const selectTasksDetailed = (state: RootState) => state.tasks.detailed
-export const selectTasksNotEmpty = (state: RootState) => state.tasks.notEmpty
 export const selectTasksStatuses = (state: RootState) => state.tasks.defaultStatuses
+export const selectTaskDetailed = (state: RootState) => state.tasks.detailed
+export const selectTaskDragged = (state: RootState) => state.tasks.dragged
 
 export default tasksSlice.reducer
