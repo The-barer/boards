@@ -60,4 +60,6 @@ export const router = createBrowserRouter([
         path: '/auth/callback',
         element: <Callback />,
     },
-])
+], {
+    basename: "/boards/",
+  })
