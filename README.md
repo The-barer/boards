@@ -19,6 +19,6 @@ React + TypeScript + Vite
    - CRUD
 
 ## Server: 
- ###Nest
- ###PostgresSQL
+ ### Nest
+ ### PostgresSQL
  
