@@ -44,9 +44,9 @@ declare global {
      * and use it in @/shared/model/hooks.ts
      */
 
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+     
     declare type RootState = import('../src/App/appStore').RootState
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+     
     declare type AppDispatch = import('../src/App/appStore').AppDispatch
 }
 
