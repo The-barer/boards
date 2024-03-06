@@ -8,7 +8,7 @@ React + TypeScript + Vite
    - **Base**  (e-mail confirm optional)
    - **0Auth VK** 
    - **0Auth Google**
-   - 
+     
 ### **Boards** categories for tasks:
    - Boards side menu w D&D
    - Actions: CRUD
