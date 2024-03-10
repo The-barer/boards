@@ -54,7 +54,7 @@ export const EditTask = ({ onReject, type = 'create', task }: EditTask) => {
         const newTask: ITaskCreateDTO = {
             categoryId: categoryId.value,
             title: title.value,
-            dueDate: dueDate?.value,
+            dueDate: dueDate?.value ? new Date(dueDate?.value) : undefined,
             description: description?.value,
             status: status.value,
         }
@@ -62,7 +62,6 @@ export const EditTask = ({ onReject, type = 'create', task }: EditTask) => {
         switch (type) {
             case 'create':
                 onCreate({ ...newTask })
-                // console.log('create new task: ', { ...newTask })
                 break
 
             case 'update':

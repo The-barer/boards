@@ -5,11 +5,13 @@ import {
     setAccessTokenToLocalStorage,
 } from '@/Shared/Lib/Helpers/localStorage.helper'
 import { sessionApi } from '../api/session.api'
+import { userApi } from '../api/user.api'
+import { IUserProfileData } from '..'
 
 const initialState: SessionSlice = {
     accessToken: null,
-    isAuthorized: null,
     loading: false,
+    profile: null,
 }
 
 export const sessionSlice = createSlice({
@@ -18,12 +20,12 @@ export const sessionSlice = createSlice({
     reducers: {
         clearSessionData: (state) => {
             state.accessToken = null
-            state.isAuthorized = false
+
             removeTokenFromLocalStorage()
         },
         setToken: (state, { payload }: PayloadAction<string>) => {
-            state.isAuthorized = true
             state.accessToken = payload
+            state.loading = false
             setAccessTokenToLocalStorage(payload)
         },
     },
@@ -32,45 +34,46 @@ export const sessionSlice = createSlice({
             .addMatcher(
                 sessionApi.endpoints.login.matchFulfilled,
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
-                    state.isAuthorized = true
                     state.accessToken = payload.accessToken
+                    state.loading = false
+                    state.profile = payload.user
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
             .addMatcher(
                 sessionApi.endpoints.signin.matchFulfilled,
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
-                    state.isAuthorized = true
                     state.accessToken = payload.accessToken
+                    state.loading = false
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
             .addMatcher(
                 sessionApi.endpoints.loginVK.matchFulfilled,
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
-                    state.isAuthorized = true
                     state.accessToken = payload.accessToken
+                    state.loading = false
+
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
             .addMatcher(
                 sessionApi.endpoints.loginGoogle.matchFulfilled,
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
-                    state.isAuthorized = true
                     state.accessToken = payload.accessToken
+                    state.loading = false
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
             .addMatcher(sessionApi.endpoints.logout.matchFulfilled, (state) => {
                 state.accessToken = null
-                state.isAuthorized = false
+                state.loading = false
                 removeTokenFromLocalStorage()
             })
 
             .addMatcher(
                 sessionApi.endpoints.refreshToken.matchFulfilled,
                 (state, { payload }: PayloadAction<AccessToken>) => {
-                    state.isAuthorized = true
                     state.accessToken = payload.accessToken
                     state.loading = false
                     setAccessTokenToLocalStorage(payload.accessToken)
@@ -79,36 +82,47 @@ export const sessionSlice = createSlice({
             .addMatcher(sessionApi.endpoints.refreshToken.matchPending, (state) => {
                 state.loading = true
             })
+            .addMatcher(sessionApi.endpoints.login.matchPending, (state) => {
+                state.loading = true
+            })
+            .addMatcher(sessionApi.endpoints.loginGoogle.matchPending, (state) => {
+                state.loading = true
+            })
+            .addMatcher(sessionApi.endpoints.loginVK.matchPending, (state) => {
+                state.loading = true
+            })
             .addMatcher(sessionApi.endpoints.refreshToken.matchRejected, (state) => {
-                state.isAuthorized = false
                 state.accessToken = null
                 state.loading = false
                 removeTokenFromLocalStorage()
             })
             .addMatcher(sessionApi.endpoints.login.matchRejected, (state) => {
-                state.isAuthorized = false
                 state.accessToken = null
                 state.loading = false
                 removeTokenFromLocalStorage()
             })
             .addMatcher(sessionApi.endpoints.loginGoogle.matchRejected, (state) => {
-                state.isAuthorized = false
                 state.accessToken = null
                 state.loading = false
                 removeTokenFromLocalStorage()
             })
             .addMatcher(sessionApi.endpoints.loginVK.matchRejected, (state) => {
-                state.isAuthorized = false
                 state.accessToken = null
                 state.loading = false
                 removeTokenFromLocalStorage()
             })
+            .addMatcher(
+                userApi.endpoints.profile.matchFulfilled,
+                (state, { payload }: PayloadAction<IUserProfileData>) => {
+                    state.profile = payload
+                },
+            )
     },
 })
 
 export const { clearSessionData, setToken } = sessionSlice.actions
 
-export const selectIsAuthorized = (state: RootState) => state.session.isAuthorized
+export const selectIsAuthorized = (state: RootState) => !!state.session.profile
 export const selectSession = (state: RootState) => state.session
 export const selectAccessToken = (state: RootState) => state.session.accessToken
 

@@ -18,4 +18,14 @@ export {
 } from './api/session.api'
 
 export { invalidateAccessTokenListener } from '../../Features/Authentication/InvalidateAccessToken/model/listener'
-export { useSession } from './model/useSession'
+
+export { useCheckSession } from './model/useCheckSession'
+
+export { UserCardSmall } from './ui/UserCardSmall'
+
+export type {
+    IUserProfileData,
+    IUserLoginData,
+    IUserCreateProfile,
+    IUserUpdateData,
+} from './model/userTypes'

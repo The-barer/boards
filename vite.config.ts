@@ -13,5 +13,13 @@ export default defineConfig({
             '@assets': path.resolve(__dirname, 'src/Shared/UI/assets'),
         },
     },
-    base: '/boards/',
+    base: '/',
+    server: {
+        host: true,
+        port: 5173,
+    },
+    preview: {
+        host: true,
+        port: 5173,
+    },
 })

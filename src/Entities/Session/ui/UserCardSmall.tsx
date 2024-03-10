@@ -1,6 +1,6 @@
 import avatarIcon from '@assets/icons/default-avatar.svg'
 import style from './UserCard.module.scss'
-import { useProfileQuery } from '../API/user.api'
+import { useProfileQuery } from '../api/user.api'
 
 export const UserCardSmall = () => {
     const { data, isLoading } = useProfileQuery()

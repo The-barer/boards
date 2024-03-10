@@ -1,5 +1,7 @@
 import { IUserAuthData } from '@/Entities/Session/model/sessionTypes'
+
 import { USER_TAG, baseApi } from '@/Shared/Api'
+
 import { IUserActivated, IUserProfileData } from '../model/userTypes'
 
 export const userApi = baseApi.injectEndpoints({

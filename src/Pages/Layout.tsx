@@ -1,35 +1,27 @@
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Sidebar } from '@/Widgets/Sidebar'
 
 import { useEffect } from 'react'
 
-import { useSession } from '@/Entities/Session'
+import { useCheckSession } from '@/Entities/Session'
 
 export const Layout = () => {
     const navigate = useNavigate()
-    const session = useSession()
+    const { pathname: requested } = useLocation()
+    const isAuth = useCheckSession()
 
     useEffect(() => {
-        if (!session.loading && !session.isAuthorized) {
-            navigate('/auth')
+        if (!isAuth) {
+            navigate('/auth', { state: { requested } })
         }
-    }, [navigate, session])
+    }, [isAuth, navigate, requested])
 
-    if (session.loading) {
-        return <div>No auth, loading...</div>
+    if (!isAuth) {
+        return <div>No auth, logout...</div>
     }
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                minWidth: '100vw',
-                width: '100vw',
-                height: '100vh',
-                gap: '1rem',
-                backgroundColor: 'white',
-            }}
-        >
+        <div className="main-layout">
             <Sidebar />
             <Outlet />
         </div>

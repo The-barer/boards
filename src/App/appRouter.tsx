@@ -10,56 +10,59 @@ import { Callback } from '@/Pages/Callback'
 import { PersonalInfo } from '@/Pages/PersonalInfo'
 import { BoardPage } from '@/Pages/BoardPage'
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+    [
+        {
+            path: '/',
+            element: <Layout />,
+            errorElement: <ErrorPage />,
+            children: [
+                { index: true, element: <HomePage /> },
+                {
+                    path: 'main',
+                    element: (
+                        <ProtectedRoute>
+                            <Secret />
+                        </ProtectedRoute>
+                    ),
+                },
+                {
+                    path: 'lk',
+                    element: (
+                        <ProtectedRoute role="cat">
+                            <PersonalInfo />
+                        </ProtectedRoute>
+                    ),
+                },
+                {
+                    path: '/board/:boardId',
+                    element: (
+                        <ProtectedRoute>
+                            <BoardPage />
+                        </ProtectedRoute>
+                    ),
+                },
+                {
+                    path: '/task/:taskId',
+                    element: (
+                        <ProtectedRoute>
+                            <BoardPage />
+                        </ProtectedRoute>
+                    ),
+                },
+            ],
+        },
+        {
+            path: '/auth/:type?',
+            element: <Auth />,
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: '/auth/callback',
+            element: <Callback />,
+        },
+    ],
     {
-        path: '/',
-        element: <Layout />,
-        errorElement: <ErrorPage />,
-        children: [
-            { index: true, element: <HomePage /> },
-            {
-                path: 'main',
-                element: (
-                    <ProtectedRoute>
-                        <Secret />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: 'lk',
-                element: (
-                    <ProtectedRoute role="cat">
-                        <PersonalInfo />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: '/board/:boardId',
-                element: (
-                    <ProtectedRoute>
-                        <BoardPage />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: '/task/:taskId',
-                element: (
-                    <ProtectedRoute>
-                        <BoardPage />
-                    </ProtectedRoute>
-                ),
-            },
-        ],
+        basename: '/',
     },
-    {
-        path: '/auth/:type?',
-        element: <Auth />,
-        errorElement: <ErrorPage />,
-    },
-    {
-        path: '/auth/callback',
-        element: <Callback />,
-    },
-], {
-    basename: "/boards/",
-  })
+)

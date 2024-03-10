@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { LoginForm } from '@/Features/Authentication/Login'
 import { LoginVK } from '@/Features/Authentication/LoginVK'
@@ -13,8 +13,14 @@ const LOGIN = 'login'
 export const Login = () => {
     const { type } = useParams()
     const navigate = useNavigate()
+    const { state } = useLocation()
     const onSuccess = () => {
-        navigate('/', {})
+        let destination = '/'
+        if (state?.requested) {
+            destination = state?.requested
+        }
+        console.log('state req', state)
+        navigate(destination)
     }
 
     function renderActions() {

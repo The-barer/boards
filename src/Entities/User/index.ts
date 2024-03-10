@@ -4,6 +4,4 @@ export type {
     IUserLoginData,
     IUserCreateProfile,
     IUserUpdateData,
-} from './model/userTypes'
-
-export { UserCardSmall } from './ui/UserCardSmall'
+} from '../Session/model/userTypes'

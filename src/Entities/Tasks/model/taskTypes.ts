@@ -24,7 +24,7 @@ export interface ITaskCreateDTO {
     title: string
     description: string | undefined
     status?: string | undefined
-    dueDate?: string | undefined
+    dueDate?: Date | undefined
     priorityOrder?: number | undefined
 }
 

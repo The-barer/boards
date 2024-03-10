@@ -43,10 +43,33 @@ declare global {
      * Its hack way to export redux infering types from @/app
      * and use it in @/shared/model/hooks.ts
      */
+    declare module '*.module.css' {
+        const classes: { [key: string]: string }
+        export default classes
+    }
 
-     
+    declare module '*.module.scss' {
+        const classes: { [key: string]: string }
+        export default classes
+    }
+
+    declare module '*.module.sass' {
+        const classes: { [key: string]: string }
+        export default classes
+    }
+
+    declare module '*.module.less' {
+        const classes: { [key: string]: string }
+        export default classes
+    }
+
+    declare module '*.module.styl' {
+        const classes: { [key: string]: string }
+        export default classes
+    }
+
     declare type RootState = import('../src/App/appStore').RootState
-     
+
     declare type AppDispatch = import('../src/App/appStore').AppDispatch
 }
 

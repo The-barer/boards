@@ -27,6 +27,7 @@
             "@assets/*": ["src/Shared/UI/assets/*"],
             "@UI/*": ["src/Shared/UI/*"]
         },
+
         "plugins": [{ "name": "typescript-plugin-css-modules" }]
     },
     "include": ["src", "types/app.d.ts"],

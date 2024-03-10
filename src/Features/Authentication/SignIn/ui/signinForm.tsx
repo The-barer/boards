@@ -69,7 +69,9 @@ export function SigninForm({ onSuccess }: Props) {
             <InputWithMsg {...username} />
             <InputWithMsg {...photo} />
 
-            <button type="submit">Registration</button>
+            <button type="submit" className={style.btnBlack}>
+                Registration
+            </button>
         </form>
     )
 }

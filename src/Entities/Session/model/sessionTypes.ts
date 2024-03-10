@@ -2,8 +2,8 @@ import { IUserProfileData } from '@/Entities/User/'
 
 export type SessionSlice = {
     accessToken: string | null
-    isAuthorized: boolean | null
     loading: boolean
+    profile: IUserProfileData | null
 }
 
 export interface IUserAuthData {

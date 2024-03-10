@@ -1,4 +1,4 @@
-import { UserCardSmall } from '@/Entities/User'
+import { UserCardSmall } from '@/Entities/Session'
 import { LogoutBtn } from '@/Features/Authentication/Logout'
 import { BoardsMenu } from '@/Features/Boards/DraggableList'
 

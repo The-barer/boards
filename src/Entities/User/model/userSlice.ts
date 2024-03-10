@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { IUserProfileData, UserState } from './userTypes.ts'
-import { userApi } from '../API/user.api.ts'
+import { IUserProfileData, UserState } from '../../Session/model/userTypes.ts'
+import { userApi } from '../../Session/api/user.api.ts'
 
 const initialState: UserState = {
     profile: null,
