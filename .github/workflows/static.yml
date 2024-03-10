@@ -25,7 +25,7 @@ jobs:
   # Single deploy job since we're just deploying
   deploy:
     environment:
-      name: github-pages
+      name: boards
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
@@ -40,6 +40,12 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+        env:
+          VITE_APP_HOST: ${{ vars.VITE_APP_HOST  }}
+          VITE_API_ENDPOINT: '176.113.81.217:4003/api'
+          VITE_VK_CLIENT_ID: ${{ secrets.VITE_VK_CLIENT_ID  }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID  }}
+          VITE_APP_DEV_MODE: false          
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
