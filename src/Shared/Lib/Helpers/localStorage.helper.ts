@@ -5,7 +5,11 @@ export function getAccessTokenFromLocalStorage(): string {
 }
 
 export function setAccessTokenToLocalStorage(token: string): void {
-    localStorage.setItem('accessToken', JSON.stringify(token))
+    if (token.length > 10) {
+        localStorage.setItem('accessToken', JSON.stringify(token))
+    } else {
+        console.log('set token err')
+    }
 }
 
 export function removeTokenFromLocalStorage(): void {

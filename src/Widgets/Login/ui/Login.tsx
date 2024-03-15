@@ -19,7 +19,6 @@ export const Login = () => {
         if (state?.requested) {
             destination = state?.requested
         }
-        console.log('state req', state)
         navigate(destination)
     }
 

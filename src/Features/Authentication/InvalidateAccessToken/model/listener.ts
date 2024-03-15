@@ -17,7 +17,7 @@ startInvalidateAccessTokenListener({
     effect: async (_, api) => {
         const session = api.getState().session
 
-        if (session.isAuthorized && session.accessToken) {
+        if (!!session.profile && session.accessToken) {
             setAccessTokenToLocalStorage(session.accessToken)
         }
 

@@ -20,7 +20,6 @@ export const sessionSlice = createSlice({
     reducers: {
         clearSessionData: (state) => {
             state.accessToken = null
-
             removeTokenFromLocalStorage()
         },
         setToken: (state, { payload }: PayloadAction<string>) => {

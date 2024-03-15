@@ -27,3 +27,6 @@ dist-ssr
 #ENV
 *.env
 Makefile
+Secret/boards_public.key
+Secret/boards-cert.crt
+Secret/boards-key.pem
