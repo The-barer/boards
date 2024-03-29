@@ -4,10 +4,10 @@ import { InputWithMsg } from '@/Shared/UI/inputs/InputWithMsg'
 import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { ShowPassword } from '@/Shared/UI/inputs/features/ShowPassword'
 import { useInput } from '@/Shared/Lib/Hooks/useInput'
-import { loginThunk } from '..'
-import { LoginParams } from '../model/login'
 
 import style from './LoginForm.module.scss'
+import { IUserLoginData, sessionApi } from '@/Entities/Session'
+import { isServerError } from '@/Shared/Api'
 
 type LoginFormFields = {
     email: HTMLInputElement
@@ -25,16 +25,20 @@ export function LoginForm({ onSuccess }: Props) {
 
     const dispatch = useAppDispatch()
 
-    const handelLogin = async (params: LoginParams) => {
-        dispatch(loginThunk(params))
+    const handelLogin = async (params: IUserLoginData) => {
+        dispatch(sessionApi.endpoints.login.initiate(params))
             .unwrap()
             .then(() => {
                 console.log('success login')
                 onSuccess()
             })
-            .catch((error: unknown) => {
+            .catch((error) => {
+                if (isServerError(error)) {
+                    console.log(error.data.message)
+                } else {
+                    console.log('rejected', error)
+                }
                 //setError message?
-                console.log(error)
             })
     }
 
@@ -42,11 +46,11 @@ export function LoginForm({ onSuccess }: Props) {
         e.preventDefault()
         e.stopPropagation()
         if (email.valid && password.valid) {
-            const data = {
+            const loginData = {
                 email: e.currentTarget.email.value,
                 password: e.currentTarget.password.value,
             }
-            await handelLogin(data)
+            await handelLogin(loginData)
         } else {
             //setError message?
         }
