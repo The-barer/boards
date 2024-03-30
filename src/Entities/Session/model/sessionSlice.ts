@@ -122,6 +122,7 @@ export const sessionSlice = createSlice({
 export const { clearSessionData, setToken } = sessionSlice.actions
 
 export const selectIsAuthorized = (state: RootState) => !!state.session.profile
+export const selectisLoading = (state: RootState) => state.session.loading
 export const selectSession = (state: RootState) => state.session
 export const selectAccessToken = (state: RootState) => state.session.accessToken
 

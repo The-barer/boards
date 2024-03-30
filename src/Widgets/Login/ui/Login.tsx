@@ -6,6 +6,9 @@ import { SigninForm } from '@/Features/Authentication/SignIn'
 import { LoginGoogle } from '@/Features/Authentication/LoginGoogle'
 
 import style from './login.module.scss'
+import { useAppSelector } from '@/Shared/Lib/Hooks'
+import { selectisLoading } from '@/Entities/Session'
+import { Loader } from '@/Shared/UI'
 
 const SIGNIN = 'signin'
 const LOGIN = 'login'
@@ -21,6 +24,7 @@ export const Login = () => {
         }
         navigate(destination)
     }
+    const isLoading = useAppSelector(selectisLoading)
 
     function renderActions() {
         if (type === SIGNIN) {
@@ -60,7 +64,8 @@ export const Login = () => {
 
     return (
         <div className={style.loginWidget}>
-            <div className={style.title}>Welcome to Boards</div>
+            {isLoading && <Loader />}
+            <div className={style.title}>Welcome to Boardsd</div>
             <div className={style.actions}>{renderActions()}</div>
             <div className={style.footer}>{renderFooter()}</div>
         </div>

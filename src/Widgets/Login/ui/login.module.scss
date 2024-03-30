@@ -2,6 +2,7 @@ $color-text-secondary: #585f74;
 $color-text-control: #0a68f5;
 
 .loginWidget {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,4 +44,15 @@ $color-text-control: #0a68f5;
         border: none;
         cursor: pointer;
     }
+}
+
+.loader {
+    position: absolute;
+    display: flex;
+    inset: 0;
+    opacity: 0.5;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 }

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
 import { InputWithMsg } from '@/Shared/UI/inputs/InputWithMsg'
-import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { ShowPassword } from '@/Shared/UI/inputs/features/ShowPassword'
+import { IUserLoginData, sessionApi } from '@/Entities/Session'
+import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { useInput } from '@/Shared/Lib/Hooks/useInput'
+import { isServerError } from '@/Shared/Api'
 
 import style from './LoginForm.module.scss'
-import { IUserLoginData, sessionApi } from '@/Entities/Session'
-import { isServerError } from '@/Shared/Api'
 
 type LoginFormFields = {
     email: HTMLInputElement
@@ -21,21 +21,27 @@ type Props = {
 export function LoginForm({ onSuccess }: Props) {
     const email = useInput('email')
     const password = useInput('password')
+
     const [newType, setNewType] = useState<string>(password.type)
+    const [errorMsg, setError] = useState<string>('')
 
     const dispatch = useAppDispatch()
 
     const handelLogin = async (params: IUserLoginData) => {
-        dispatch(sessionApi.endpoints.login.initiate(params))
+        //set loading
+        await dispatch(sessionApi.endpoints.login.initiate(params))
             .unwrap()
             .then(() => {
                 console.log('success login')
+
                 onSuccess()
             })
             .catch((error) => {
                 if (isServerError(error)) {
-                    console.log(error.data.message)
+                    setError(error.data.message.toString())
+                    console.log(errorMsg)
                 } else {
+                    setError(error.toString())
                     console.log('rejected', error)
                 }
                 //setError message?
@@ -46,11 +52,12 @@ export function LoginForm({ onSuccess }: Props) {
         e.preventDefault()
         e.stopPropagation()
         if (email.valid && password.valid) {
-            const loginData = {
+            const authdata = {
                 email: e.currentTarget.email.value,
                 password: e.currentTarget.password.value,
             }
-            await handelLogin(loginData)
+
+            await handelLogin(authdata)
         } else {
             //setError message?
         }
