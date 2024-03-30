@@ -39,13 +39,11 @@ export function LoginForm({ onSuccess }: Props) {
             .catch((error) => {
                 if (isServerError(error)) {
                     setError(error.data.message.toString())
-                    console.log(errorMsg)
                 } else {
                     setError(error.toString())
-                    console.log('rejected', error)
                 }
-                //setError message?
             })
+        console.log(errorMsg)
     }
 
     const handelSubmit = async (e: React.FormEvent<HTMLFormElement & LoginFormFields>) => {
@@ -65,6 +63,12 @@ export function LoginForm({ onSuccess }: Props) {
 
     return (
         <form className={style.loginForm} onSubmit={handelSubmit}>
+            {errorMsg && (
+                <div className={style.error}>
+                    Error: {errorMsg.slice(0, 50)}
+                    {errorMsg.length > 50 && '...'}
+                </div>
+            )}
             <InputWithMsg {...email} />
             <InputWithMsg {...password} type={newType}>
                 <ShowPassword setType={setNewType} />

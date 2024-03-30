@@ -32,3 +32,13 @@
         box-shadow: 3px 2px 5px 0px rgb(73 73 73 / 40%);
     }
 }
+
+.error {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    left: 0;
+    transform: translateY(-150%);
+    color: var(--color-danger);
+    justify-content: center;
+}
