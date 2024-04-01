@@ -65,7 +65,7 @@ export const Login = () => {
     return (
         <div className={style.loginWidget}>
             {isLoading && <Loader />}
-            <div className={style.title}>Welcome to Boardsd</div>
+            <div className={style.title}>Welcome to Boards</div>
             <div className={style.actions}>{renderActions()}</div>
             <div className={style.footer}>{renderFooter()}</div>
         </div>

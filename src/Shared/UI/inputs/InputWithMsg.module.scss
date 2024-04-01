@@ -3,10 +3,10 @@ $color-text-primary: #16181d;
 $color-stroke-input: #8b92a7;
 
 .inputFrame {
-    min-width: 300px;
+    min-width: 18rem;
     height: 100px;
     display: flex;
-    gap: 8px;
+    gap: 0.2rem;
     flex-direction: column;
     font-family: 'Manrope', sans-serif;
     font-weight: 500;
@@ -17,6 +17,7 @@ $color-stroke-input: #8b92a7;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
+    padding-bottom: 0.2rem;
     color: $color-text-primary;
 }
 
@@ -46,7 +47,7 @@ $color-stroke-input: #8b92a7;
         display: flex;
         gap: 3px;
         inset: 0;
-        margin: auto -10%;
+        margin: auto -2rem;
         width: fit-content;
         height: 24px;
     }

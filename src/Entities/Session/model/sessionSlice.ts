@@ -84,6 +84,9 @@ export const sessionSlice = createSlice({
             .addMatcher(sessionApi.endpoints.login.matchPending, (state) => {
                 state.loading = true
             })
+            .addMatcher(sessionApi.endpoints.signin.matchPending, (state) => {
+                state.loading = true
+            })
             .addMatcher(sessionApi.endpoints.loginGoogle.matchPending, (state) => {
                 state.loading = true
             })
@@ -96,6 +99,11 @@ export const sessionSlice = createSlice({
                 removeTokenFromLocalStorage()
             })
             .addMatcher(sessionApi.endpoints.login.matchRejected, (state) => {
+                state.accessToken = null
+                state.loading = false
+                removeTokenFromLocalStorage()
+            })
+            .addMatcher(sessionApi.endpoints.signin.matchRejected, (state) => {
                 state.accessToken = null
                 state.loading = false
                 removeTokenFromLocalStorage()

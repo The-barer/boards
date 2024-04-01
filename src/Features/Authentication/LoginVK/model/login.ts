@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { sessionApi } from '@/Entities/Session/'
-import { isFetchBaseQueryError, isServerError } from '@/Shared/Api'
+import { isServerError } from '@/Shared/Api'
 import { setUserData } from '@/Entities/User'
 
 export const loginVKThunk = createAsyncThunk<void, string, { state: RootState }>(
@@ -12,7 +12,7 @@ export const loginVKThunk = createAsyncThunk<void, string, { state: RootState }>
             ).unwrap()
             dispatch(setUserData(response.user))
         } catch (error) {
-            if (isFetchBaseQueryError(error) && isServerError(error.data)) {
+            if (isServerError(error)) {
                 throw new Error(error.data.message.toString())
             }
 

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { sessionApi } from '@/Entities/Session/'
-import { isFetchBaseQueryError, isServerError } from '@/Shared/Api'
+import { isServerError } from '@/Shared/Api'
 import { setUserData } from '@/Entities/User'
 
 export const loginGoogleThunk = createAsyncThunk<void, string, { state: RootState }>(
@@ -12,10 +12,8 @@ export const loginGoogleThunk = createAsyncThunk<void, string, { state: RootStat
             ).unwrap()
             dispatch(setUserData(response.user))
         } catch (error) {
-            if (isFetchBaseQueryError(error)) {
-                if (isServerError(error.data)) {
-                    throw new Error(error.data.message.toString())
-                }
+            if (isServerError(error)) {
+                throw new Error(error.data.message.toString())
             }
 
             throw new Error('Unknown error')

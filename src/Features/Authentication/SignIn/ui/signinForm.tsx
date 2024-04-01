@@ -6,7 +6,8 @@ import { useInput } from '@/Shared/Lib/Hooks/useInput'
 
 import style from './signinForm.module.scss'
 import { IUserCreateProfile } from '@/Entities/User'
-import { signinThunk } from '../model/signinThunk'
+import { sessionApi } from '@/Entities/Session'
+import { isServerError } from '@/Shared/Api'
 
 type LoginFormFields = {
     email: HTMLInputElement
@@ -27,19 +28,25 @@ export function SigninForm({ onSuccess }: Props) {
 
     const [newType, setNewType] = useState<string>(password.type)
 
+    const [errorMsg, setError] = useState<string>('')
+
     const dispatch = useAppDispatch()
 
     const handelLogin = async (params: IUserCreateProfile) => {
-        dispatch(signinThunk(params))
+        dispatch(sessionApi.endpoints.signin.initiate(params))
             .unwrap()
             .then(() => {
                 console.log('success login')
                 onSuccess()
             })
-            .catch((error: unknown) => {
-                //setError message?
-                console.log(error)
+            .catch((error) => {
+                if (isServerError(error)) {
+                    setError(error.data.message.toString())
+                } else {
+                    setError(error.toString())
+                }
             })
+        console.log(errorMsg)
     }
 
     const handelSubmit = async (e: React.FormEvent<HTMLFormElement & LoginFormFields>) => {
@@ -56,12 +63,18 @@ export function SigninForm({ onSuccess }: Props) {
             console.log(data)
             await handelLogin(data)
         } else {
-            //setError message?
+            setError('incorrect registration data')
         }
     }
 
     return (
         <form className={style.signinForm} onSubmit={handelSubmit}>
+            {errorMsg && (
+                <div className={style.error}>
+                    Error: {errorMsg.slice(0, 50)}
+                    {errorMsg.length > 50 && '...'}
+                </div>
+            )}
             <InputWithMsg {...email} />
             <InputWithMsg {...password} type={newType}>
                 <ShowPassword setType={setNewType} />

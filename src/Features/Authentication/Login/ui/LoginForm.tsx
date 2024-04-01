@@ -57,7 +57,7 @@ export function LoginForm({ onSuccess }: Props) {
 
             await handelLogin(authdata)
         } else {
-            //setError message?
+            setError('incorrect login data')
         }
     }
 

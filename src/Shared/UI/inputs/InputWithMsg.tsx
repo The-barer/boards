@@ -22,21 +22,21 @@ export const InputWithMsg = (props: Props) => {
 
     return (
         <div className={style.inputFrame}>
-            <label htmlFor={type} className={style.label}>
-                {label}
+            <label>
+                <div className={style.label}>{label}</div>
+                <div className={style.inputField}>
+                    <input
+                        className={error && style.invalid}
+                        placeholder={type}
+                        name={type}
+                        type={type}
+                        id={type}
+                        {...inputOptions}
+                        autoComplete="on"
+                    />
+                    <div className={style.inputFeatures}>{children}</div>
+                </div>
             </label>
-            <div className={style.inputField}>
-                <input
-                    className={error && style.invalid}
-                    placeholder={type}
-                    name={type}
-                    type={type}
-                    id={type}
-                    {...inputOptions}
-                    autoComplete="on"
-                />
-                <div className={style.inputFeatures}>{children}</div>
-            </div>
             {error && <div className={style.errorMessage}>{error}</div>}
         </div>
     )
