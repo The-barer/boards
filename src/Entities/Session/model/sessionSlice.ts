@@ -52,7 +52,6 @@ export const sessionSlice = createSlice({
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
                     state.accessToken = payload.accessToken
                     state.loading = false
-
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )

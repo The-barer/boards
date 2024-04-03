@@ -24,7 +24,7 @@ export const sessionApi = baseApi.injectEndpoints({
 
         loginVK: build.query<IUserAuthData, string>({
             query: (searchParams) => ({
-                url: `/auth/login/vk?${searchParams}`,
+                url: `/auth/login/vk${searchParams}`,
                 method: 'GET',
             }),
             providesTags: [SESSION_TAG],
@@ -32,7 +32,7 @@ export const sessionApi = baseApi.injectEndpoints({
 
         loginGoogle: build.query<IUserAuthData, string>({
             query: (searchParams) => ({
-                url: `/auth/login/google?${searchParams}`,
+                url: `/auth/login/google${searchParams}`,
                 method: 'GET',
             }),
             providesTags: [SESSION_TAG],
