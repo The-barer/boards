@@ -12,11 +12,11 @@ jobs:
         steps:
             - name: save https cert&key to file
               shell: bash
+
               run: |
-                  ls
-                  echo $HTTPS_PRIVATE_KEY > ./Secret/boards-key.pem     
+                  echo $HTTPS_PRIVATE_KEY > ~/Secret/boards-key.pem     
                   cat  src/Secret/boards-key.pem
-                  echo $HTTPS_PRIVATE_CERT > ./Secret/boards-cert.crt
+                  echo $HTTPS_PRIVATE_CERT > ~/Secret/boards-cert.crt
                   cat  src/Secret/boards-cert.crt
               env:
                   HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
