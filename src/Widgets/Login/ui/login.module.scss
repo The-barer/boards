@@ -2,13 +2,14 @@ $color-text-secondary: #585f74;
 $color-text-control: #0a68f5;
 
 .loginWidget {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 2rem;
     border-radius: 24px;
-    padding: 32px;
-    width: 370px;
+    padding: 1.5rem;
+    width: 25rem;
     height: fit-content;
     background-color: white;
     margin: auto;
@@ -25,6 +26,7 @@ $color-text-control: #0a68f5;
         display: flex;
         flex-direction: column;
         gap: 20px;
+        width: 100%;
     }
 
     .footer {

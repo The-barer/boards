@@ -1,47 +1,55 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
-import { useAppDispatch, usePopupClose } from '@/Shared/Lib/Hooks'
-import { makeURL } from '@/Shared/Lib/Helpers'
-import { settings } from '../model/settings'
-import { loginGoogleThunk } from '../model/login'
+import { sessionApi } from '@/Entities/Session'
+import { useAppDispatch } from '@/Shared/Lib/Hooks'
+import { openPopup } from '@/Shared/Lib/Helpers'
+import { googleAuthUrl } from '../model/settings'
 
-import Logo from '../assets/google-icon-logo.svg?react'
-
+import LogoGoogle from '../assets/google-icon-logo.svg?react'
 import style from './LoginGoogle.module.scss'
 
 export const LoginGoogle = ({ onSuccess }: { onSuccess: () => void }) => {
-    const [searchParams, setSearchParams] = useState<URLSearchParams>()
-    const wait = useRef(false)
+    const { type } = useParams()
     const dispatch = useAppDispatch()
-    const link = makeURL(settings)
-
-    const popup = usePopupClose(link, setSearchParams)
 
     useEffect(() => {
-        const handelLogin = async (searchParams: URLSearchParams) => {
-            dispatch(loginGoogleThunk(searchParams.toString()))
+        const handelLogin = async (searchParams: string) => {
+            dispatch(sessionApi.endpoints.loginGoogle.initiate(searchParams))
                 .unwrap()
                 .then(() => onSuccess())
-                .catch((e: unknown) => {
-                    console.log(e)
-                })
+                .catch((e) => console.log(e))
         }
 
-        if (wait.current && searchParams) {
-            handelLogin(searchParams)
+        if (type === 'google' && location.search) {
+            handelLogin(location.search)
         }
-    }, [dispatch, onSuccess, searchParams])
+    }, [dispatch, onSuccess, type])
 
     const handelSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
         e.stopPropagation()
-        wait.current = true
-        popup.open()
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+        if (isMobile) {
+            location.href = googleAuthUrl
+        } else {
+            const popup = openPopup(googleAuthUrl)
+            if (popup) {
+                const interval = setInterval(() => {
+                    if (popup.closed) {
+                        clearInterval(interval)
+                        const search = popup.location.search
+                        location.href = '/auth/google' + search
+                    }
+                }, 1000)
+            }
+        }
     }
 
     return (
         <button onClick={handelSubmit} className={style.btnBlack}>
-            <Logo />
+            <LogoGoogle />
             <div className="text">Continue with Google!</div>
         </button>
     )

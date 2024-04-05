@@ -1,8 +1,6 @@
 import { type FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
 type ServerError = {
-    message: string | string[]
-    statusCode: number
-    error: string
+    data: { message: string | string[]; statusCode: number; error: string }
 }
 
 export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {

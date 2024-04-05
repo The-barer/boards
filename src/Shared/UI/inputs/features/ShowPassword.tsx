@@ -14,7 +14,13 @@ export const ShowPassword = ({ setType }: Props) => {
     }
 
     return (
-        <button className={style.btn} onMouseDown={toggle} onMouseUp={toggle}>
+        <button
+            className={style.btn}
+            onMouseDown={toggle}
+            onMouseUp={toggle}
+            onTouchStart={toggle}
+            onTouchEnd={toggle}
+        >
             <img
                 src={state ? showIcon : hideIcon}
                 alt={`${state ? 'Show' : 'Hide'} password`}

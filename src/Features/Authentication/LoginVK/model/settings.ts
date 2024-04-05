@@ -1,10 +1,10 @@
 import { config } from '@/Shared/Config'
 
-import { IAuthConfig } from '../types/types'
+import { makeURL } from '@/Shared/Lib/Helpers'
 
 // https://vk.com/dev/authcode_flow_user
 
-export const settings: IAuthConfig = {
+export const vkAuthUrl = makeURL({
     baseUrl: 'https://oauth.vk.com/authorize',
     searchParams: {
         client_id: import.meta.env.VITE_VK_CLIENT_ID,
@@ -12,6 +12,6 @@ export const settings: IAuthConfig = {
         display: 'popup',
         scope: 'email',
         response_type: 'code',
-        state: Math.trunc(Math.random() * 19890903).toString(),
+        state: 'vk',
     },
-}
+})

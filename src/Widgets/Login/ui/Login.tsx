@@ -6,21 +6,26 @@ import { SigninForm } from '@/Features/Authentication/SignIn'
 import { LoginGoogle } from '@/Features/Authentication/LoginGoogle'
 
 import style from './login.module.scss'
+import { useAppSelector } from '@/Shared/Lib/Hooks'
+import { selectisLoading } from '@/Entities/Session'
+import { Loader } from '@/Shared/UI'
+import { useCallback } from 'react'
 
 const SIGNIN = 'signin'
 const LOGIN = 'login'
 
 export const Login = () => {
     const { type } = useParams()
-    const navigate = useNavigate()
     const { state } = useLocation()
-    const onSuccess = () => {
+    const navigate = useNavigate()
+    const onSuccess = useCallback(() => {
         let destination = '/'
         if (state?.requested) {
             destination = state?.requested
         }
         navigate(destination)
-    }
+    }, [navigate, state?.requested])
+    const isLoading = useAppSelector(selectisLoading)
 
     function renderActions() {
         if (type === SIGNIN) {
@@ -60,6 +65,7 @@ export const Login = () => {
 
     return (
         <div className={style.loginWidget}>
+            {isLoading && <Loader />}
             <div className={style.title}>Welcome to Boards</div>
             <div className={style.actions}>{renderActions()}</div>
             <div className={style.footer}>{renderFooter()}</div>

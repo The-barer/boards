@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Sidebar } from '@/Widgets/Sidebar'
 
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 
 import { useCheckSession } from '@/Entities/Session'
 
@@ -22,8 +22,10 @@ export const Layout = () => {
 
     return (
         <div className="main-layout">
-            <Sidebar />
-            <Outlet />
+            <Suspense fallback={<div style={{ opacity: '0.7' }}>Loading...</div>}>
+                <Sidebar />
+                <Outlet />
+            </Suspense>
         </div>
     )
 }

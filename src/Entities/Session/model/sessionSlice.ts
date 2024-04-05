@@ -52,7 +52,6 @@ export const sessionSlice = createSlice({
                 (state, { payload }: PayloadAction<IUserAuthData>) => {
                     state.accessToken = payload.accessToken
                     state.loading = false
-
                     setAccessTokenToLocalStorage(payload.accessToken)
                 },
             )
@@ -84,6 +83,9 @@ export const sessionSlice = createSlice({
             .addMatcher(sessionApi.endpoints.login.matchPending, (state) => {
                 state.loading = true
             })
+            .addMatcher(sessionApi.endpoints.signin.matchPending, (state) => {
+                state.loading = true
+            })
             .addMatcher(sessionApi.endpoints.loginGoogle.matchPending, (state) => {
                 state.loading = true
             })
@@ -96,6 +98,11 @@ export const sessionSlice = createSlice({
                 removeTokenFromLocalStorage()
             })
             .addMatcher(sessionApi.endpoints.login.matchRejected, (state) => {
+                state.accessToken = null
+                state.loading = false
+                removeTokenFromLocalStorage()
+            })
+            .addMatcher(sessionApi.endpoints.signin.matchRejected, (state) => {
                 state.accessToken = null
                 state.loading = false
                 removeTokenFromLocalStorage()
@@ -122,6 +129,7 @@ export const sessionSlice = createSlice({
 export const { clearSessionData, setToken } = sessionSlice.actions
 
 export const selectIsAuthorized = (state: RootState) => !!state.session.profile
+export const selectisLoading = (state: RootState) => state.session.loading
 export const selectSession = (state: RootState) => state.session
 export const selectAccessToken = (state: RootState) => state.session.accessToken
 

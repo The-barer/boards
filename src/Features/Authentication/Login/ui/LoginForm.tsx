@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
 import { InputWithMsg } from '@/Shared/UI/inputs/InputWithMsg'
-import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { ShowPassword } from '@/Shared/UI/inputs/features/ShowPassword'
+import { IUserLoginData, sessionApi } from '@/Entities/Session'
+import { useAppDispatch } from '@/Shared/Lib/Hooks/reduxHooks'
 import { useInput } from '@/Shared/Lib/Hooks/useInput'
-import { loginThunk } from '..'
-import { LoginParams } from '../model/login'
+import { isServerError } from '@/Shared/Api'
 
 import style from './LoginForm.module.scss'
 
@@ -21,39 +21,54 @@ type Props = {
 export function LoginForm({ onSuccess }: Props) {
     const email = useInput('email')
     const password = useInput('password')
+
     const [newType, setNewType] = useState<string>(password.type)
+    const [errorMsg, setError] = useState<string>('')
 
     const dispatch = useAppDispatch()
 
-    const handelLogin = async (params: LoginParams) => {
-        dispatch(loginThunk(params))
+    const handelLogin = async (params: IUserLoginData) => {
+        //set loading
+        await dispatch(sessionApi.endpoints.login.initiate(params))
             .unwrap()
             .then(() => {
                 console.log('success login')
+
                 onSuccess()
             })
-            .catch((error: unknown) => {
-                //setError message?
-                console.log(error)
+            .catch((error) => {
+                if (isServerError(error)) {
+                    setError(error.data.message.toString())
+                } else {
+                    setError(error.toString())
+                }
             })
+        console.log(errorMsg)
     }
 
     const handelSubmit = async (e: React.FormEvent<HTMLFormElement & LoginFormFields>) => {
         e.preventDefault()
         e.stopPropagation()
         if (email.valid && password.valid) {
-            const data = {
+            const authdata = {
                 email: e.currentTarget.email.value,
                 password: e.currentTarget.password.value,
             }
-            await handelLogin(data)
+
+            await handelLogin(authdata)
         } else {
-            //setError message?
+            setError('incorrect login data')
         }
     }
 
     return (
         <form className={style.loginForm} onSubmit={handelSubmit}>
+            {errorMsg && (
+                <div className={style.error}>
+                    Error: {errorMsg.slice(0, 50)}
+                    {errorMsg.length > 50 && '...'}
+                </div>
+            )}
             <InputWithMsg {...email} />
             <InputWithMsg {...password} type={newType}>
                 <ShowPassword setType={setNewType} />

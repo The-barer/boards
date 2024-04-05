@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+ENV VITE_APP_DEV_MODE=false
+
 RUN npm run build
 
 EXPOSE 5173
