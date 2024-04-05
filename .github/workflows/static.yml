@@ -10,6 +10,14 @@ jobs:
         runs-on: ubuntu-latest
         environment: boards
         steps:
+            - name: save https cert&key to file
+              run: |
+                  echo $HTTPS_PRIVATE_KEY > ./Secret/boards-key.pem
+                  echo $HTTPS_PRIVATE_CERT > ./Secret/boards-cert.crt
+              env:
+                  HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
+                  HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
+
             - name: Checkout
               uses: actions/checkout@v4
             - name: Login to Docker Hub
