@@ -8,16 +8,17 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        environment: boards
         steps:
             - name: VPS restart docker
               uses: appleboy/ssh-action@master
               with:
-                  host: ${{ secrets.SERVER_IP }}
-                  USERNAME: ${{ secrets.thebarer }}
-                  password: ${{ secrets.SERVER_PASSWORD }}
+                  host: ${{ secrets.VPS_HOST }}
+                  USERNAME: ${{ secrets.VPS_USER }}
+                  PASSWORD: ${{ secrets.VPS_PASSWORD }}
                   KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
                       cd boards
                       docker compose stop
                       docker compose pull
-                      docker compose up
+                      docker compose up -d

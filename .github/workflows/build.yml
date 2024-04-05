@@ -6,61 +6,61 @@ on:
             - 'main'
 
 jobs:
-    # build:
-    #     runs-on: ubuntu-latest
-    #     environment: boards
-    #     steps:
-    #         - name: Checkout
-    #           uses: actions/checkout@v4
-
-    #         - name: save https cert&key to file
-    #           shell: bash
-    #           run: |
-    #               echo $HTTPS_PRIVATE_KEY > ${{ github.workspace }}/Secret/boards-key.pem
-    #               cat  ${{ github.workspace }}/Secret/boards-key.pem
-    #               echo $HTTPS_PRIVATE_CERT > ${{ github.workspace }}/Secret/boards-cert.crt
-    #               cat  ${{ github.workspace }}/Secret/boards-cert.crt
-    #           env:
-    #               HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
-    #               HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
-
-    #         - name: Login to Docker Hub
-    #           uses: docker/login-action@v3
-    #           with:
-    #               username: ${{ secrets.DOCKERHUB_USERNAME }}
-    #               password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    #         - name: Set up Docker Buildx
-    #           uses: docker/setup-buildx-action@v3
-
-    #         - name: Build and push
-    #           uses: docker/build-push-action@v5
-    #           with:
-    #               context: .
-    #               file: ./Dockerfile
-    #               push: true
-    #               tags: ${{ secrets.DOCKERHUB_USERNAME }}/boards-client:latest
-    #           env:
-    #               VITE_APP_HOST: ${{ vars.VITE_APP_HOST  }}
-    #               VITE_API_ENDPOINT: ${{ vars.VITE_API_ENDPOINT  }}
-    #               VITE_VK_CLIENT_ID: ${{ secrets.VITE_VK_CLIENT_ID  }}
-    #               VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID  }}
-    #               VITE_APP_DEV_MODE: false
-
-    deploy:
-        # needs: build
+    build:
         runs-on: ubuntu-latest
         environment: boards
         steps:
-            - name: VPS restart docker
-              uses: appleboy/ssh-action@master
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: save https cert&key to file
+              shell: bash
+              run: |
+                  echo $HTTPS_PRIVATE_KEY > ${{ github.workspace }}/Secret/boards-key.pem
+                  cat  ${{ github.workspace }}/Secret/boards-key.pem
+                  echo $HTTPS_PRIVATE_CERT > ${{ github.workspace }}/Secret/boards-cert.crt
+                  cat  ${{ github.workspace }}/Secret/boards-cert.crt
+              env:
+                  HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
+                  HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
+
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
               with:
-                  host: ${{ secrets.VPS_HOST }}
-                  USERNAME: ${{ secrets.VPS_USER }}
-                  PASSWORD: ${{ secrets.VPS_PASSWORD }}
-                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                  script: |
-                      cd boards
-                      docker compose stop
-                      docker compose pull
-                      docker compose up
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Build and push
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  file: ./Dockerfile
+                  push: true
+                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/boards-client:latest
+              env:
+                  VITE_APP_HOST: ${{ vars.VITE_APP_HOST  }}
+                  VITE_API_ENDPOINT: ${{ vars.VITE_API_ENDPOINT  }}
+                  VITE_VK_CLIENT_ID: ${{ secrets.VITE_VK_CLIENT_ID  }}
+                  VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID  }}
+                  VITE_APP_DEV_MODE: false
+
+    # deploy:
+    #     needs: build
+    #     runs-on: ubuntu-latest
+    #     environment: boards
+    #     steps:
+    #         - name: VPS restart docker
+    #           uses: appleboy/ssh-action@master
+    #           with:
+    #               host: ${{ secrets.VPS_HOST }}
+    #               USERNAME: ${{ secrets.VPS_USER }}
+    #               PASSWORD: ${{ secrets.VPS_PASSWORD }}
+    #               KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    #               script: |
+    #                   cd boards
+    #                   docker compose stop
+    #                   docker compose pull
+    #                   docker compose up -d
