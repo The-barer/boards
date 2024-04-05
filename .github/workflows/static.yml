@@ -13,13 +13,10 @@ jobs:
             - name: save https cert&key to file
               shell: bash
               run: |
-                  echo $HTTPS_PRIVATE_KEY > src/Secret/boards-key.pem
-                  cat src/Secret/boards-key.pem
-                  echo $HTTPS_PRIVATE_CERT > src/Secret/boards-cert.crt
-                  cat src/Secret/boards-cert.crt
+                  echo $HTTPS_PRIVATE_KEY > boards-key.pem
+
               env:
                   HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
-                  HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
 
             - name: Checkout
               uses: actions/checkout@v4
