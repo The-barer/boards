@@ -14,6 +14,7 @@ jobs:
               shell: bash
 
               run: |
+                  ls ${{ github.workspace }}
                   echo $HTTPS_PRIVATE_KEY > ${{ github.workspace }}/Secret/boards-key.pem     
                   cat  ${{ github.workspace }}/Secret/boards-key.pem
                   echo $HTTPS_PRIVATE_CERT > ${{ github.workspace }}/Secret/boards-cert.crt
