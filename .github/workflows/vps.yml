@@ -19,6 +19,6 @@ jobs:
                   KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
                       cd boards
-                      docker compose stop
                       docker compose pull
+                      docker compose stop
                       docker compose up -d
