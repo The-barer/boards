@@ -16,8 +16,8 @@ const LOGIN = 'login'
 
 export const Login = () => {
     const { type } = useParams()
-    const navigate = useNavigate()
     const { state } = useLocation()
+    const navigate = useNavigate()
     const onSuccess = useCallback(() => {
         let destination = '/'
         if (state?.requested) {
