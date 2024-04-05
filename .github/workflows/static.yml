@@ -13,6 +13,7 @@ jobs:
             - name: save https cert&key to file
               shell: bash
               run: |
+                  mkdir Secret
                   cd Secret
                   echo $HTTPS_PRIVATE_KEY > boards-key.pem     
                   echo $HTTPS_PRIVATE_CERT > src/Secret/boards-cert.crt
