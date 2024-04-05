@@ -47,18 +47,19 @@ jobs:
                   VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID  }}
                   VITE_APP_DEV_MODE: false
 
-    # deploy:
-    #     needs: build
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - name: VPS update client
-    #           uses: appleboy/ssh-action@master
-    #           with:
-    #               host: ${{ secrets.SERVER_IP }}
-    #               USERNAME: ${{ secrets.thebarer }}
-    #               KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    #               script: |
-    #                   cd boards
-    #                   docker compose stop
-    #                   docker compose pull
-    #                   docker compose up
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: VPS restart docker
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SERVER_IP }}
+                  USERNAME: ${{ secrets.thebarer }}
+                  password: ${{ secrets.SERVER_PASSWORD }}
+                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+                      cd boards
+                      docker compose stop
+                      docker compose pull
+                      docker compose up
