@@ -16,8 +16,8 @@ jobs:
             - name: save https cert&key to file
               shell: bash
               run: |
-                  echo "$HTTPS_PRIVATE_KEY" > ${{ github.workspace }}/Secret/boards-key.key
-                  echo "$HTTPS_PRIVATE_CERT" > ${{ github.workspace }}/Secret/boards-cert.crt
+                  echo -n $HTTPS_PRIVATE_KEY | base64 -d -o ${{ github.workspace }}/Secret/boards-key.pem
+                  echo -n $HTTPS_PRIVATE_CERT | base64 -d -o ${{ github.workspace }}/Secret/boards-cert.crt
               env:
                   HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
                   HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
@@ -44,21 +44,23 @@ jobs:
                   VITE_VK_CLIENT_ID: ${{ secrets.VITE_VK_CLIENT_ID  }}
                   VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID  }}
                   VITE_APP_DEV_MODE: false
+                  VITE_HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
+                  VITE_HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
 
-    # deploy:
-    #     needs: build
-    #     runs-on: ubuntu-latest
-    #     environment: boards
-    #     steps:
-    #         - name: VPS restart docker
-    #           uses: appleboy/ssh-action@master
-    #           with:
-    #               host: ${{ secrets.VPS_HOST }}
-    #               USERNAME: ${{ secrets.VPS_USER }}
-    #               PASSWORD: ${{ secrets.VPS_PASSWORD }}
-    #               KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    #               script: |
-    #                   cd boards
-    #                   docker compose stop
-    #                   docker compose pull
-    #                   docker compose up -d
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        environment: boards
+        steps:
+            - name: VPS update docker
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  USERNAME: ${{ secrets.VPS_USER }}
+                  PASSWORD: ${{ secrets.VPS_PASSWORD }}
+                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+                      cd boards
+                      docker compose stop
+                      docker compose pull
+                      docker compose up -d

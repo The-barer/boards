@@ -29,4 +29,4 @@ dist-ssr
 Makefile
 Secret/boards_public.key
 Secret/boards-cert.crt
-Secret/boards-key.key
+Secret/boards-key.pem

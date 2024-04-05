@@ -31,7 +31,7 @@ export default defineConfig({
             'Strict-Transport-Security': `max-age=${oneYearInSeconds}`,
         },
         https: {
-            key: fs.readFileSync('./Secret/boards-key.key'),
+            key: fs.readFileSync('./Secret/boards-key.pem'),
             cert: fs.readFileSync('./Secret/boards-cert.crt'),
         },
     },

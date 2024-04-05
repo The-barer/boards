@@ -2,7 +2,7 @@ name: VPS-Update
 
 on:
     workflow_run:
-        workflows: ['Boards-build']
+        workflows: ['x']
         types: [completed]
 
 jobs:
