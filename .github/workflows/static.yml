@@ -16,7 +16,7 @@ jobs:
                   mkdir Secret
                   cd Secret
                   echo $HTTPS_PRIVATE_KEY > boards-key.pem     
-                  echo $HTTPS_PRIVATE_CERT > src/Secret/boards-cert.crt
+                  echo $HTTPS_PRIVATE_CERT > boards-cert.crt
               env:
                   HTTPS_PRIVATE_KEY: ${{ secrets.HTTPS_PRIVATE_KEY }}
                   HTTPS_PRIVATE_CERT: ${{ secrets.HTTPS_PRIVATE_CERT }}
