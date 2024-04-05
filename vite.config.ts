@@ -20,8 +20,8 @@ export default defineConfig({
         host: true,
         port: 5173,
         https: {
-            key: fs.readFileSync('./Secret/boards-key.pem'),
-            cert: fs.readFileSync('./Secret/boards-cert.crt'),
+            key: fs.readFileSync('./Secret/Local.key'),
+            cert: fs.readFileSync('./Secret/Local.crt'),
         },
     },
     preview: {
@@ -31,7 +31,7 @@ export default defineConfig({
             'Strict-Transport-Security': `max-age=${oneYearInSeconds}`,
         },
         https: {
-            key: fs.readFileSync('./Secret/boards-key.pem'),
+            key: fs.readFileSync('./Secret/boards-key.key'),
             cert: fs.readFileSync('./Secret/boards-cert.crt'),
         },
     },

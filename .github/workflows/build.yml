@@ -16,7 +16,7 @@ jobs:
             - name: save https cert&key to file
               shell: bash
               run: |
-                  echo $HTTPS_PRIVATE_KEY > ${{ github.workspace }}/Secret/boards-key.pem
+                  echo $HTTPS_PRIVATE_KEY > ${{ github.workspace }}/Secret/boards-key.key
                   cat  ${{ github.workspace }}/Secret/boards-key.pem
                   echo $HTTPS_PRIVATE_CERT > ${{ github.workspace }}/Secret/boards-cert.crt
                   cat  ${{ github.workspace }}/Secret/boards-cert.crt
