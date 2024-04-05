@@ -1,8 +1,8 @@
-name: VPS update
+name: VPS-Update
 
 on:
     workflow_run:
-        workflows: ['build']
+        workflows: ['Boards-build']
         types: [completed]
 
 jobs:
