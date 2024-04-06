@@ -38,11 +38,10 @@ jobs:
                   file: ./Dockerfile
                   push: true
                   tags: ${{ secrets.DOCKERHUB_USERNAME }}/boards-client:latest
-                  build-args: |
-                      VITE_APP_HOST
-                      VITE_API_ENDPOINT
-                      VITE_VK_CLIENT_ID
-                      VITE_GOOGLE_CLIENT_ID
+                  build-args: APP_HOST=$VITE_APP_HOST
+                      API_ENDPOINT=$VITE_API_ENDPOINT
+                      VK_CLIENT_ID=${{ secrets.VITE_VK_CLIENT_ID  }}
+                      GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID  }}
               env:
                   VITE_APP_HOST: ${{ vars.VITE_APP_HOST  }}
                   VITE_API_ENDPOINT: ${{ vars.VITE_API_ENDPOINT  }}
