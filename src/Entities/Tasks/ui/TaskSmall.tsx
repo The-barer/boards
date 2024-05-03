@@ -4,10 +4,12 @@ import { setDetailedTask } from '..'
 import { ITask } from '../model/taskTypes'
 
 import style from './task.module.scss'
+import { useSearchParams } from 'react-router-dom'
 
 export const TaskSmall = (props: ITask) => {
     const { title, description, dueDate } = props
     const dispatch = useAppDispatch()
+    const [, setSearch] = useSearchParams()
 
     return (
         <div
@@ -15,6 +17,7 @@ export const TaskSmall = (props: ITask) => {
             className={[style.taskItem].join(' ')}
             onClick={() => {
                 dispatch(setDetailedTask(props))
+                setSearch(`task=${props.id}`)
             }}
         >
             <div className={style.taskTitle}>{title}</div>

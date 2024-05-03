@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom'
 
-import { TasksBoard, TaskLoader } from '@/Widgets/TasksBoard'
+import { TasksBoard } from '@/Widgets/TasksBoard'
 import { TaskModal } from '@/Entities/Tasks/ui/TaskModal'
+import { Loader } from '@/Shared/UI'
 
 import style from '@UI/Styles/pagesStyle.module.scss'
 
 export const BoardPage = () => {
-    const { boardId, taskId } = useParams()
+    const { boardId } = useParams()
 
     const renderTasks = () => {
         if (boardId) {
@@ -18,11 +19,7 @@ export const BoardPage = () => {
             )
         }
 
-        if (taskId) {
-            return <TaskLoader taskId={taskId} />
-        }
-
-        return <div className="div">Loading...</div>
+        return <Loader />
     }
 
     return <div className={style.boardPage}>{renderTasks()}</div>

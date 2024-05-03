@@ -34,7 +34,7 @@ export const taskApi = baseApi.injectEndpoints({
                 url: `/task/${id}`,
                 method: 'GET',
             }),
-            // providesTags: [TASK_TAG],
+            providesTags: [TASK_TAG],
         }),
 
         getAllTasks: build.query<ITask[], string>({

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/Shared/Lib/Hooks'
 import { ITaskCreateDTO, ITaskDetails, ITaskUpdateDTO, taskApi } from '@/Entities/Tasks'
 
-import { selectTasksStatuses } from '@/Entities/Tasks/model/taskSlice'
+import { selectTasksStatuses, tasksSlice } from '@/Entities/Tasks/model/taskSlice'
 import { boardsList } from '@/Entities/Boards'
 
 import style from './task.module.scss'
@@ -38,8 +38,9 @@ export const EditTask = ({ onReject, type = 'create', task }: EditTask) => {
 
     const onUpdate = async (task: ITaskUpdateDTO) => {
         try {
+            dispatch(tasksSlice.actions.setDetailedTask(task))
             await dispatch(taskApi.endpoints.updateTask.initiate(task)).unwrap()
-            await dispatch(taskApi.endpoints.getTask.initiate(task.id)).unwrap()
+            // await dispatch(taskApi.endpoints.getTask.initiate(task.id)).unwrap()
             onReject()
         } catch (e) {
             console.log(e)
@@ -54,7 +55,7 @@ export const EditTask = ({ onReject, type = 'create', task }: EditTask) => {
         const newTask: ITaskCreateDTO = {
             categoryId: categoryId.value,
             title: title.value,
-            dueDate: dueDate?.value ? new Date(dueDate?.value) : undefined,
+            dueDate: dueDate?.value,
             description: description?.value,
             status: status.value,
         }
@@ -115,7 +116,7 @@ export const EditTask = ({ onReject, type = 'create', task }: EditTask) => {
                         type="date"
                         className={style.input}
                         name="dueDate"
-                        defaultValue={task?.dueDate?.toString()}
+                        defaultValue={task?.dueDate ? task.dueDate : undefined}
                     />
                 </div>
                 <div className={style.param}>

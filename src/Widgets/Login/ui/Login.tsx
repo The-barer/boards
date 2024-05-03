@@ -1,15 +1,15 @@
+import { useCallback } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useAppSelector } from '@/Shared/Lib/Hooks'
 
 import { LoginForm } from '@/Features/Authentication/Login'
 import { LoginVK } from '@/Features/Authentication/LoginVK'
 import { SigninForm } from '@/Features/Authentication/SignIn'
 import { LoginGoogle } from '@/Features/Authentication/LoginGoogle'
+import { Loader } from '@/Shared/UI'
+import { selectisLoading } from '@/Entities/Session'
 
 import style from './login.module.scss'
-import { useAppSelector } from '@/Shared/Lib/Hooks'
-import { selectisLoading } from '@/Entities/Session'
-import { Loader } from '@/Shared/UI'
-import { useCallback } from 'react'
 
 const SIGNIN = 'signin'
 const LOGIN = 'login'
@@ -18,6 +18,7 @@ export const Login = () => {
     const { type } = useParams()
     const { state } = useLocation()
     const navigate = useNavigate()
+
     const onSuccess = useCallback(() => {
         let destination = '/'
         if (state?.requested) {
@@ -25,6 +26,7 @@ export const Login = () => {
         }
         navigate(destination)
     }, [navigate, state?.requested])
+
     const isLoading = useAppSelector(selectisLoading)
 
     function renderActions() {
