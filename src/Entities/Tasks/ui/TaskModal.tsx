@@ -1,17 +1,29 @@
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/Shared/Lib/Hooks'
-import { clearDetailedTask, selectTaskDetailed } from '..'
-import style from './task.module.scss'
+
+import { clearDetailedTask, selectTaskDetailed, taskApi } from '..'
 import { EditTask } from './editTask'
-import { useState } from 'react'
 import { TaskFull } from './taskFull'
 
-export const TaskModal = () => {
-    const task = useAppSelector(selectTaskDetailed)
-    const [editable, setEditable] = useState(false)
+import style from './task.module.scss'
 
+export const TaskModal = () => {
+    const [search, setSearch] = useSearchParams()
+    const task = useAppSelector(selectTaskDetailed)
     const dispatch = useAppDispatch()
 
+    useEffect(() => {
+        const taskId = search.get('task')
+        if (taskId && task?.id !== taskId) {
+            dispatch(taskApi.endpoints.getTask.initiate(taskId))
+        }
+    }, [dispatch, task?.id, search])
+
+    const [editable, setEditable] = useState(false)
+
     const closeModal = () => {
+        setSearch('')
         dispatch(clearDetailedTask())
     }
 
