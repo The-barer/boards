@@ -3,6 +3,7 @@ export interface ITask {
     title: string
     description: string
     status: string
+    tags: string[] | []
     dueDate: string | null
     priorityOrder: number
     createdAt: Date | string
@@ -14,6 +15,15 @@ export interface ITask {
         createdAt?: string
         updatedAt?: string
     }
+}
+
+export interface ITag {
+    tagTitle: string
+    tagColor: string
+}
+export interface ITaskFilter {
+    type: string
+    value: string
 }
 
 export interface ITaskDetails extends Partial<ITask> {}

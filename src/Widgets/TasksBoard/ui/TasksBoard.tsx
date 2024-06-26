@@ -1,10 +1,12 @@
-import { useGetAllTasksQuery } from '@/Entities/Tasks/api/task.api'
-import { selectTasksStatuses } from '@/Entities/Tasks'
 import { AddTask } from '@/Features/Task/CreateTask/'
 import { StatusBoard } from '@/Features/Boards/StatusBoard'
-import { useAppSelector } from '@/Shared/Lib/Hooks'
-import { boardsList } from '@/Entities/Boards'
 import { BoardSwitch } from '@/Features/Boards'
+import { Loader } from '@/Shared/UI'
+
+import { selectTasksStatuses, useGetAllTasksQuery } from '@/Entities/Tasks'
+import { boardsList } from '@/Entities/Boards'
+import { useAppSelector } from '@/Shared/Lib/Hooks'
+import { useTaskFilter } from '../model/useTaskFilter'
 
 import style from './tasksBoard.module.scss'
 
@@ -12,10 +14,13 @@ export const TasksBoard = ({ boardId }: { boardId: string }) => {
     const { data, isError, isLoading } = useGetAllTasksQuery(boardId)
     const statuses = useAppSelector(selectTasksStatuses)
     const boards = useAppSelector(boardsList)
+
     const currentBoard = boards.find((board) => board.id === boardId)
 
+    const tasks = useTaskFilter(data)
+
     if (isError || isLoading || !data) {
-        return <div className={style.board}>Loading</div>
+        return <Loader />
     }
 
     return (
@@ -35,7 +40,7 @@ export const TasksBoard = ({ boardId }: { boardId: string }) => {
                                 <StatusBoard
                                     key={i}
                                     status={status}
-                                    tasks={data}
+                                    tasks={tasks}
                                     boardId={currentBoard.id}
                                 />
                             ))}

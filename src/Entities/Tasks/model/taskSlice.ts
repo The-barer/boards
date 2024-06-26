@@ -1,15 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { ITask, ITaskDetails, TaskStatus } from './taskTypes.ts'
+import { ITag, ITask, ITaskDetails, ITaskFilter, TaskStatus } from './taskTypes.ts'
 import { taskApi } from '../api/task.api.ts'
 
 const initialState: {
     list: ITask[] | []
+    tags: ITag[] | []
+    filter: ITaskFilter | null
     dragged: ITask | null
     detailed: ITaskDetails | null
     defaultStatuses: TaskStatus[]
 } = {
     list: [],
+    tags: [],
+    filter: null,
     dragged: null,
     detailed: null,
     defaultStatuses: [
@@ -41,6 +45,12 @@ export const tasksSlice = createSlice({
         clearDetailedTask: (state) => {
             state.detailed = null
         },
+        setTaskFilter: (state, { payload }: PayloadAction<ITaskFilter>) => {
+            state.filter = payload
+        },
+        clearTaskFilter: (state) => {
+            state.filter = null
+        },
     },
     extraReducers(builder) {
         builder
@@ -68,12 +78,20 @@ export const tasksSlice = createSlice({
     },
 })
 
-export const { clearTasks, setDetailedTask, clearDetailedTask, clearDraggedTask, setDraggedTask } =
-    tasksSlice.actions
+export const {
+    clearTasks,
+    setDetailedTask,
+    clearDetailedTask,
+    clearDraggedTask,
+    setDraggedTask,
+    setTaskFilter,
+    clearTaskFilter,
+} = tasksSlice.actions
 
 export const selectTasks = (state: RootState) => state.tasks.list
 export const selectTasksStatuses = (state: RootState) => state.tasks.defaultStatuses
 export const selectTaskDetailed = (state: RootState) => state.tasks.detailed
 export const selectTaskDragged = (state: RootState) => state.tasks.dragged
+export const selectTaskFilter = (state: RootState) => state.tasks.filter
 
 export default tasksSlice.reducer
